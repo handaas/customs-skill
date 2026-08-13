@@ -1,0 +1,4 @@
+interface:
+  display_name: "海关大数据报告"
+  short_description: "基于 HandaaS 海关大数据 MCP，生成出口趋势 / 出口产品趋势(HS码) / 外贸招聘画像 / 出口订单地区分布 / 海外认证的专业 HTML / Markdown / JSON 报告。"
+  default_prompt: "使用 $customs-report 生成「企业名称」的海关大数据报告：自动补全企业全称，调用海关 MCP 工具，产出 HTML + Markdown + JSON 三件套。"

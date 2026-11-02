@@ -21,10 +21,9 @@ import argparse
 import datetime as dt
 import json
 import pathlib
-import sys
-from typing import Any, Dict, List, Mapping, Optional
+from typing import Any, Dict, List, Mapping, Optional, Sequence
 
-from common import REPORT_BANNER, REPORT_TYPE, json_dumps, load_json_file, print_json
+from common import REPORT_BANNER, REPORT_TYPE, attach_pagination, call_tool_once, collect_detail_pages, die, json_dumps, load_json_file, paid_call_scope, print_json
 import mcp_client
 from render_report import render_html, render_markdown, html_to_pdf
 
@@ -44,39 +43,118 @@ T_OVERSEAS_CERTS = "customs_bigdata_overseas_certifications"
 # --------------------------------------------------------------------------- #
 
 
-def _is_api_error(value: Any) -> bool:
-    """Detect MCP API error responses (not empty data, but actual failures like 405)."""
-    if value is None:
-        return False
+def _is_empty_response(value: Any) -> bool:
+    if value is None or value == "" or value == {}:
+        return True
     if isinstance(value, str):
-        return any(s in value for s in ("接口调用失败", "查询失败", "状态码：4", "状态码：5"))
+        text = value.strip().lower()
+        return any(token in text for token in ("查询数据为空", "暂无数据", "未查询到", "未检索到", "no data"))
     if isinstance(value, dict):
-        for v in value.values():
-            if isinstance(v, str) and any(s in v for s in ("接口调用失败", "查询失败", "状态码：4", "状态码：5")):
+        for key in ("text", "message", "msg"):
+            if key in value and _is_empty_response(value.get(key)):
                 return True
+        containers = [value.get(key) for key in ("resultList", "list", "items", "data") if key in value]
+        if containers and all(item in (None, [], {}) for item in containers):
+            total = value.get("total")
+            return total in (None, 0, "0")
     return False
 
+
+def _is_api_error(value: Any) -> bool:
+    """Return True only for failed calls; platform empty-data text is not an error."""
+    if value is None or _is_empty_response(value):
+        return False
+    if isinstance(value, str):
+        text = value.lower()
+        return any(token in text for token in (
+            "接口调用失败", "查询失败", "状态码：4", "状态码：5",
+            "upstream timeout", "tool failed", "unauthorized", "forbidden",
+        ))
+    if isinstance(value, dict):
+        if value.get("isError") is True or value.get("is_error") is True or value.get("success") is False:
+            return True
+        if any(value.get(key) not in (None, "", False) for key in ("_error", "error")):
+            return True
+        code = value.get("code")
+        if code not in (None, 0, "0", 200, "200", 10001, "10001"):
+            return True
+        return any(_is_api_error(value.get(key)) for key in ("text", "message", "msg") if key in value)
+    return False
+
+
 def _first_list(value: Any) -> List[Any]:
+    if _is_api_error(value) or _is_empty_response(value):
+        return []
     if isinstance(value, list):
         return value
     if isinstance(value, dict):
-        if _is_api_error(value):
-            return []
-        for key in ("resultList", "list", "items", "data"):
+        for key in ("resultList", "list", "items"):
             if isinstance(value.get(key), list):
                 return value[key]
-    if value in (None, "", {}):
-        return []
-    return [value]
+        nested = value.get("data")
+        if isinstance(nested, list):
+            return nested
+        if isinstance(nested, dict):
+            return _first_list(nested)
+    return []
 
 
 def _first_record(value: Any) -> Dict[str, Any]:
+    if _is_api_error(value) or _is_empty_response(value):
+        return {}
     for record in _first_list(value):
-        if isinstance(record, dict):
+        if isinstance(record, dict) and _has_evidence(record):
             return record
     if isinstance(value, dict):
-        return value
+        envelope = {"resultList", "list", "items", "data", "total", "pageNo", "pageSize", "text", "message", "msg", "code"}
+        if not set(value).issubset(envelope) and _has_evidence(value):
+            return value
     return {}
+
+
+def _has_evidence(value: Any) -> bool:
+    if value is None or value == "" or value == "-":
+        return False
+    if _is_api_error(value) or _is_empty_response(value):
+        return False
+    if isinstance(value, dict):
+        return any(_has_evidence(item) for key, item in value.items() if key not in {"total", "pageNo", "pageSize"})
+    if isinstance(value, (list, tuple, set)):
+        return any(_has_evidence(item) for item in value)
+    return True
+
+
+def _meaningful_row(row: Mapping[str, Any]) -> bool:
+    return any(_has_evidence(value) for value in row.values())
+
+
+def _attach_call_status(report: Dict[str, Any], calls: Mapping[str, Any]) -> Dict[str, Any]:
+    """Disclose failed and genuine-empty domains without exposing upstream details."""
+    failed = [name for name, payload in calls.items() if _is_api_error(payload)]
+    empty = [name for name, payload in calls.items() if not _is_api_error(payload) and _is_empty_response(payload)]
+    source = report.setdefault("data_source", {})
+    source["failed_products"] = failed
+    source["empty_products"] = empty
+    return report
+
+
+def _apply_resolution_limit(report: Dict[str, Any], resolved: Mapping[str, Any]) -> Dict[str, Any]:
+    subject = report.setdefault("subject", {})
+    subject["resolved"] = False
+    subject["requires_confirmation"] = True
+    subject["resolve_reason"] = resolved.get("reason", "主体未唯一确认")
+    subject["candidate_sample"] = list(resolved.get("candidate_sample") or [])
+    if resolved.get("fuzzy_total") is not None:
+        subject["fuzzy_total"] = resolved.get("fuzzy_total")
+    message = "输入未唯一确认到特定企业；已停止主体专属数据调用，不生成该企业的经营、风险或舆情评价。请使用候选企业全称或企业标识重试。"
+    report["abstract"] = message
+    report["summary"] = message
+    report["executive_summary"] = [message]
+    report["metrics"] = []
+    report["representative_records"] = []
+    report["insights"] = [{"feature": "主体确认受限", "evidence": subject["resolve_reason"], "interpretation": message}]
+    report.setdefault("data_source", {})["subject_resolution"] = "confirmation_required"
+    return report
 
 
 def _text(value: Any, limit: int = 0) -> str:
@@ -92,6 +170,11 @@ def _text(value: Any, limit: int = 0) -> str:
     return t
 
 
+def _text_or_dash(value: Any) -> str:
+    text = _text(value)
+    return text if text else "-"
+
+
 def _int(value: Any) -> Optional[int]:
     try:
         return int(value)
@@ -101,7 +184,7 @@ def _int(value: Any) -> Optional[int]:
 
 def _safe_call(tool: str, arguments: Dict[str, Any]) -> Any:
     try:
-        result = mcp_client.call_tool(tool, arguments)
+        result = call_tool_once(mcp_client.call_tool, tool, arguments)
         # Detect API error responses (405, etc.) and return error marker
         if _is_api_error(result):
             return {"_error": "API错误", "_raw": result}
@@ -125,20 +208,48 @@ def _safe_total(payload: Any) -> Any:
 def resolve_enterprise_name(raw: str) -> Dict[str, Any]:
     raw = (raw or "").strip()
     if not raw:
-        return {"keyword": "", "enterprise": "", "resolved": False, "reason": "关键词为空"}
-    if any(suffix in raw for suffix in ("公司", "集团", "有限", "院", "厂", "中心", "事务所", "合作社", "合伙")):
-        return {"keyword": raw, "enterprise": raw, "resolved": True, "reason": "视为企业全称"}
-    fuzzy = _safe_call(T_FUZZY, {"matchKeyword": raw, "pageSize": 1})
-    record = _first_record(fuzzy)
-    name = str(record.get("name") or "").strip()
-    if name:
-        return {"keyword": raw, "enterprise": name, "resolved": True, "reason": "由关键词模糊查询补全", "fuzzy_total": _int(_safe_total(fuzzy)), "record": record}
-    return {"keyword": raw, "enterprise": raw, "resolved": False, "reason": "模糊查询未命中企业全称，按关键词直查"}
+        return {"keyword": "", "enterprise": "", "resolved": False, "requires_confirmation": True, "reason": "关键词为空", "candidate_sample": []}
+    # A full legal-name-looking input is already an explicit subject selection.
+    if any(suffix in raw for suffix in ("公司", "有限", "院", "厂", "中心", "事务所", "合作社", "合伙")):
+        return {"keyword": raw, "enterprise": raw, "resolved": True, "requires_confirmation": False, "reason": "用户提供企业全称", "candidate_sample": []}
+
+    fuzzy = _safe_call(T_FUZZY, {"matchKeyword": raw, "pageSize": 10})
+    records = [item for item in _first_list(fuzzy) if isinstance(item, dict)]
+    total = _int(_safe_total(fuzzy))
+    id_keys = ("nameId", "id", "enterpriseId", "regNumber", "socialCreditCode")
+    exact = [
+        item for item in records
+        if raw == str(item.get("name") or "").strip()
+        or any(raw == str(item.get(key) or "").strip() for key in id_keys)
+    ]
+    if len(exact) == 1:
+        record = exact[0]
+        name = str(record.get("name") or raw).strip()
+        return {"keyword": raw, "enterprise": name, "resolved": True, "requires_confirmation": False, "reason": "与候选企业全称或标识精确匹配", "fuzzy_total": total, "record": record, "candidate_sample": []}
+    if len(records) == 1 and total == 1:
+        record = records[0]
+        name = str(record.get("name") or "").strip()
+        if name:
+            return {"keyword": raw, "enterprise": name, "resolved": True, "requires_confirmation": False, "reason": "模糊查询唯一命中", "fuzzy_total": total, "record": record, "candidate_sample": []}
+
+    candidates = []
+    for item in records[:5]:
+        candidate = {"name": str(item.get("name") or "").strip()}
+        for key in id_keys:
+            if item.get(key) not in (None, ""):
+                candidate[key] = str(item.get(key))
+        if candidate.get("name") or len(candidate) > 1:
+            candidates.append(candidate)
+    if candidates:
+        reason = f"模糊查询命中 {total if total is not None else '多个'} 个候选，未唯一确认主体"
+    else:
+        reason = "模糊查询未唯一命中企业，需提供企业全称或企业标识"
+    return {
+        "keyword": raw, "enterprise": raw, "resolved": False, "requires_confirmation": True,
+        "reason": reason, "fuzzy_total": total, "candidate_sample": candidates,
+    }
 
 
-# --------------------------------------------------------------------------- #
-# Enterprise profile helpers (from fuzzy_search record)
-# --------------------------------------------------------------------------- #
 
 def _extract_profile(record: Dict[str, Any]) -> Dict[str, Any]:
     """Extract enterprise profile fields from a fuzzy_search record."""
@@ -170,7 +281,7 @@ def _format_capital(val: Any, coin: str = "") -> str:
             s += f" {coin}"
         return s
     except (TypeError, ValueError):
-        return _text(val) if val else "-"
+        return _text(val) if val not in (None, "") else "-"
 
 
 def _enrich_metrics_with_profile(metrics: List[Dict[str, Any]], record: Any) -> List[Dict[str, Any]]:
@@ -178,7 +289,7 @@ def _enrich_metrics_with_profile(metrics: List[Dict[str, Any]], record: Any) -> 
     if not isinstance(record, dict):
         return metrics
     _prof = _extract_profile(record)
-    if _prof.get("reg_capital") and _prof["reg_capital"] not in ("-", "", None):
+    if _prof.get("reg_capital") not in ("-", "", None):
         metrics.append({"label": "注册资本", "value": _format_capital(_prof["reg_capital"], _prof.get("reg_capital_coin", "")), "hint": "工商登记注册资本"})
     if _prof.get("found_time") and _prof["found_time"] != "-":
         metrics.append({"label": "成立时间", "value": _prof["found_time"], "hint": "工商登记成立日期"})
@@ -211,13 +322,13 @@ def _derive_core_metrics(metrics: List[Dict[str, Any]], core: Mapping[str, Any])
     if isinstance(products, list) and products:
         metrics.append({"label": "出口产品数", "value": str(len(products)), "hint": "不同HS编码的出口产品数"})
     if isinstance(regions, list) and regions:
-        metrics.append({"label": "出口国家/地区数", "value": str(len(regions)), "hint": "出口目的地数量"})
+        metrics.append({"label": "纳入分析地区数", "value": str(len(regions)), "hint": "resultList 归纳的地区明细行数"})
         try:
             nums = [int(r.get("订单数", 0) or 0) for r in regions]
             total = sum(nums)
             if total > 0:
                 top3 = sum(sorted(nums, reverse=True)[:3])
-                metrics.append({"label": "地区CR3", "value": f"{top3/total*100:.1f}%", "hint": "前3大出口地区订单集中度"})
+                metrics.append({"label": "地区CR3", "value": f"{top3/total*100:.1f}%", "hint": "仅按返回样本行计算的前3地区订单占比"})
         except (ValueError, TypeError):
             pass
     if isinstance(certs, list) and certs:
@@ -266,7 +377,7 @@ def build_metrics(trends: Any, recruitment: Any, regions: Any, certs: Any) -> Li
     metrics.append({"label": "出口年份覆盖", "value": (str(trend_year_count) + " 年" if trend_year_count else "-"), "hint": "出口趋势所涉年份数"})
     metrics.append({"label": "累计外贸招聘", "value": (_text(recruit_total) if recruit_total is not None else "-"), "hint": "历史累计外贸相关岗位招聘总数（recruitingCount）"})
     metrics.append({"label": "近三月外贸招聘", "value": (_text(recruit_3m) if recruit_3m is not None else "-"), "hint": "近三个月外贸相关岗位招聘数"})
-    metrics.append({"label": "出口地区数", "value": (_text(regions_total) if regions_total is not None else "-"), "hint": "出口订单分布地区总数"})
+    metrics.append({"label": "出口地区总数", "value": (_text(regions_total) if regions_total is not None else "-"), "hint": "上游响应 total，可能大于纳入明细条数（仅当采集中断时）"})
     metrics.append({"label": "海外认证数", "value": (_text(cert_count) if cert_count is not None else "-"), "hint": "海外认证证书总数"})
     return [m for m in metrics if m.get("value") not in ("", None, "-")]
 
@@ -276,12 +387,13 @@ def _trend_rows(trends: Any) -> List[Dict[str, Any]]:
     for item in _first_list((trends if isinstance(trends, dict) else {}).get("exportTrend")):
         if not isinstance(item, dict):
             continue
+        count = item.get("count") if item.get("count") is not None else item.get("value")
         out.append({
-            "年份": _text(item.get("year")) or "-",
-            "出口金额(美元)": _text(item.get("amount") or "-"),
-            "订单数量": _text(item.get("count") or item.get("value") or "-"),
+            "年份": _text_or_dash(item.get("year")),
+            "出口金额(美元)": _text(item.get("amount")) if item.get("amount") is not None else "-",
+            "订单数量": _text_or_dash(count),
         })
-    return out
+    return sorted(out, key=lambda row: _int(row.get("年份")) or -1)
 
 
 def _product_trend_rows(product_trends: Any) -> List[Dict[str, Any]]:
@@ -292,8 +404,9 @@ def _product_trend_rows(product_trends: Any) -> List[Dict[str, Any]]:
         if not isinstance(item, dict):
             continue
         out.append({
-            "HS 商品编码": _text(item.get("hsCode")) or "-",
-            "订单数量": _text(item.get("count") or item.get("value") or "-"),
+            "HS 商品编码": _text_or_dash(item.get("hsCode")),
+            "订单数量": (_text(item.get("count")) if item.get("count") is not None
+                       else _text(item.get("value")) if item.get("value") is not None else "-"),
         })
     return out
 
@@ -326,10 +439,10 @@ def _region_rows(regions: Any) -> List[Dict[str, Any]]:
         if not isinstance(item, dict):
             continue
         out.append({
-            "国家/地区": _text(item.get("destCountry")) or "-",
-            "订单数": _text(item.get("count") or "-"),
-            "金额(美元)": _text(item.get("amount") or "-"),
-            "净重(千克)": _text(item.get("weight") or "-"),
+            "国家/地区": _text_or_dash(item.get("destCountry")),
+            "订单数": _text(item.get("count")) if item.get("count") is not None else "-",
+            "金额(美元)": _text(item.get("amount")) if item.get("amount") is not None else "-",
+            "净重(千克)": _text(item.get("weight")) if item.get("weight") is not None else "-",
         })
     return out
 
@@ -341,10 +454,10 @@ def _cert_rows(certs: Any) -> List[Dict[str, Any]]:
         if not isinstance(item, dict):
             continue
         out.append({
-            "认证类别": _text(item.get("certType")) or "-",
-            "认证领域": _text(item.get("certDomain")) or "-",
-            "证书号": _text(item.get("certId")) or "-",
-            "产品名称": _text(item.get("certProductName")) or "-",
+            "认证类别": _text_or_dash(item.get("certType")),
+            "认证领域": _text_or_dash(item.get("certDomain")),
+            "证书号": _text_or_dash(item.get("certId")),
+            "产品名称": _text_or_dash(item.get("certProductName")),
         })
     return out
 
@@ -366,7 +479,8 @@ def build_core_analysis(trends: Any, product_trends: Any, recruitment: Any, regi
          "columns": [("HS 商品编码", "HS 商品编码"), ("订单数量", "订单数量")]},
         {"key": "recruitment_profile", "title": "外贸招聘画像", "kind": "kv"},
         {"key": "order_regions", "title": "出口订单地区分布", "kind": "bar",
-         "note": f"共 {regions_total if regions_total is not None else '若干'} 个分布地区，展示前 N 个",
+         "note": (f"上游总数 {_text(regions_total)} 个地区；本次归纳 {len(region_rows)} 条" if regions_total is not None
+                  else f"上游未返回地区总数；本次归纳 {len(region_rows)} 条"),
          "chart": {"name": "国家/地区", "value": "订单数", "orient": "h"},
          "columns": [("国家/地区", "国家/地区"), ("订单数", "订单数"), ("金额(美元)", "金额(美元)"), ("净重(千克)", "净重(千克)")]},
         {"key": "overseas_certs", "title": "海外认证", "kind": "table", "note": "海外认证证书明细",
@@ -390,36 +504,54 @@ def build_records(core: Mapping[str, Any]) -> List[Dict[str, Any]]:
     out = []
     for item in core.get("order_regions") or []:
         out.append({
-            "国家/地区": item.get("国家/地区") or "-",
-            "订单数": item.get("订单数") or "-",
-            "金额(美元)": item.get("金额(美元)") or "-",
+            "国家/地区": item.get("国家/地区") if item.get("国家/地区") not in (None, "") else "-",
+            "订单数": item.get("订单数") if item.get("订单数") not in (None, "") else "-",
+            "金额(美元)": item.get("金额(美元)") if item.get("金额(美元)") not in (None, "") else "-",
         })
     return out[:20]
 
 
 def _trend_analysis(rows: List[Mapping[str, Any]], series_key: str, period_key: str = "年份") -> Dict[str, Any]:
     """Compute trend direction, peak, and YoY change for a numeric series in trend rows."""
-    nums = []
+    points: List[tuple[int, float]] = []
     for r in rows:
         try:
-            nums.append(float(str(r.get(series_key, 0)).replace(",", "")))
+            raw = r.get(series_key)
+            if raw in (None, "", "-"):
+                continue
+            year = _int(r.get(period_key))
+            if year is None:
+                continue
+            points.append((year, float(str(raw).replace(",", ""))))
         except (TypeError, ValueError):
-            nums.append(0.0)
-    if not nums:
+            continue
+    if not points:
         return {}
-    peak_idx = max(range(len(nums)), key=lambda i: nums[i])
-    direction = "持平"
+    points.sort(key=lambda item: item[0])
+    if all(value == 0 for _, value in points):
+        return {"all_zero": True, "incomplete_latest": any(year == dt.datetime.now().year for year, _ in points), "yoy": "", "comparison_periods": []}
+    peak_period, peak_value = max(points, key=lambda item: item[1])
+    direction = "无法同比（缺少相邻完整年度）"
     yoy = ""
-    if len(nums) >= 2:
-        last, prev = nums[-1], nums[-2]
+    current_year = dt.datetime.now().year
+    incomplete_latest = any(year == current_year for year, _ in points)
+    complete = [(year, value) for year, value in points if year < current_year]
+    comparison_periods: List[str] = []
+    if len(complete) >= 2 and complete[-1][0] - complete[-2][0] == 1:
+        prev_year, prev = complete[-2]
+        last_year, last = complete[-1]
+        comparison_periods = [str(prev_year), str(last_year)]
         if prev > 0:
             pct = (last - prev) / prev * 100
+            direction = "持平"
             if pct > 5:
                 direction = f"上升 {pct:.0f}%"
             elif pct < -5:
                 direction = f"下降 {abs(pct):.0f}%"
             yoy = f"同比 {pct:+.0f}%"
-    return {"peak_period": rows[peak_idx].get(period_key, "-"), "peak_value": nums[peak_idx], "direction": direction, "yoy": yoy, "last": nums[-1]}
+    elif incomplete_latest:
+        direction = "未比较（当前年度未完整，且缺少相邻完整年度）"
+    return {"peak_period": str(peak_period), "peak_value": peak_value, "direction": direction, "yoy": yoy, "last": points[-1][1], "incomplete_latest": incomplete_latest, "comparison_periods": comparison_periods, "all_zero": False}
 
 
 def _concentration(rows: List[Mapping[str, Any]], name_key: str, value_key: str, top_n: int = 3) -> Dict[str, Any]:
@@ -461,12 +593,12 @@ def _city_region_cluster(cities: List[Any]) -> Dict[str, int]:
     return {k: v for k, v in cluster.items() if v > 0}
 
 
-def build_insights(subject: Mapping[str, Any], core: Mapping[str, Any], metrics: List[Mapping[str, Any]]) -> List[Dict[str, Any]]:
+def build_insights(subject: Mapping[str, Any], core: Mapping[str, Any], metrics: Sequence[Mapping[str, Any]]) -> List[Dict[str, Any]]:
     insights: List[Dict[str, Any]] = []
     metric_map = {m["label"]: str(m["value"]) for m in metrics}
     trend_years = metric_map.get("出口年份覆盖")
     recruit_3m = metric_map.get("近三月外贸招聘")
-    regions_total = metric_map.get("出口地区数")
+    regions_total = metric_map.get("出口地区总数")
     cert_count = metric_map.get("海外认证数")
 
     trend_rows = core.get("export_trends") or []
@@ -474,14 +606,18 @@ def build_insights(subject: Mapping[str, Any], core: Mapping[str, Any], metrics:
         amt_ta = _trend_analysis(trend_rows, "出口金额(美元)")
         cnt_ta = _trend_analysis(trend_rows, "订单数量")
         ev_parts = []
-        if amt_ta:
+        if amt_ta.get("all_zero"):
+            ev_parts.append("出口金额均为上游原值 0；金额字段覆盖口径未验证，不据此判断出口规模或价格变化")
+        elif amt_ta:
             ev_parts.append(f"出口金额峰值在“{amt_ta['peak_period']}”（{amt_ta['peak_value']:.0f} 美元），近年{amt_ta['direction']}{('，' + amt_ta.get('yoy', '')) if amt_ta.get('yoy') else ''}")
         if cnt_ta:
             ev_parts.append(f"订单量峰值在“{cnt_ta['peak_period']}”（{cnt_ta['peak_value']:.0f} 笔），近年{cnt_ta['direction']}")
+        if amt_ta.get("incomplete_latest") or cnt_ta.get("incomplete_latest"):
+            ev_parts.append(f"{dt.datetime.now().year} 年为未完整年度（YTD），不与完整年度直接同比")
         insights.append({
             "feature": "出口活跃度",
             "evidence": f"出口趋势覆盖 {trend_years or '若干'}。" + ("；".join(ev_parts) + "。" if ev_parts else ""),
-            "interpretation": "出口金额与订单量的年度走势反映企业外贸规模扩张或收缩；金额与订单同步上升通常意味着量价齐升，订单升而金额降则可能存在价格竞争加剧。",
+            "interpretation": "年度金额与订单数仅按各自字段描述；当前年度为 YTD 时不与完整年度直接同比，跨年缺口也不标作同比。",
         })
     product_rows = core.get("export_product_trends") or []
     if product_rows:
@@ -490,7 +626,7 @@ def build_insights(subject: Mapping[str, Any], core: Mapping[str, Any], metrics:
             insights.append({
                 "feature": "核心出口品类",
                 "evidence": f"“HS {conc['top']}”为订单最多的品类，占比约 {conc['top_share']:.0f}%，前 3 类合计 {conc['cr']:.0f}%（CR3）。",
-                "interpretation": "出口品类集中度反映企业核心出口产品的竞争力；CR3 越高说明出口结构越聚焦，反之则品类更分散。",
+                "interpretation": "HS 编码占比仅描述当前返回样本中订单数量的分布与集中程度，不代表产品竞争力、售价或市场份额。",
             })
     region_rows = core.get("order_regions") or []
     if region_rows:
@@ -498,14 +634,14 @@ def build_insights(subject: Mapping[str, Any], core: Mapping[str, Any], metrics:
         if conc:
             insights.append({
                 "feature": "出口市场集中度",
-                "evidence": f"“{conc['top']}”为订单最多的市场，占比约 {conc['top_share']:.0f}%，前 3 市场合计 {conc['cr']:.0f}%（CR3）。",
-                "interpretation": "出口市场集中度过高存在单一市场政策/汇率波动风险；分散布局更稳健，建议关注头部市场的订单可持续性。",
+                "evidence": f"本次归纳样本中，“{conc['top']}”订单数最多，占比约 {conc['top_share']:.0f}%，前 3 地区合计 {conc['cr']:.0f}%（CR3）。",
+                "interpretation": "地区占比仅描述当前返回订单样本的分布，不能据此判断企业整体市场结构、政策风险或订单可持续性。",
             })
     if recruit_3m:
         insights.append({
-            "feature": "外贸团队扩张",
+            "feature": "外贸招聘记录",
             "evidence": f"近三个月外贸相关岗位招聘 {recruit_3m} 人。",
-            "interpretation": "外贸岗位招聘强度反映企业国际化业务的扩张意愿；高频招聘通常对应出口业务增长或新市场开拓。",
+            "interpretation": "该值只说明历史招聘数据中出现外贸相关岗位，不能单独证明出口增长、产能或新市场开拓。",
         })
     # 外贸职能结构（跨境电商信号检测）
     positions = core.get("recruitment_positions") or []
@@ -515,10 +651,10 @@ def build_insights(subject: Mapping[str, Any], core: Mapping[str, Any], metrics:
         is_cb = len(cross_border_signals) >= 2
         evidence = f"招聘职能覆盖：{'、'.join(positions[:8])}。"
         if is_cb:
-            evidence += f"其中 {signal_text} 等岗位同时出现，呈现典型跨境电商团队特征。"
-            interp = "外贸员+运营+美工等岗位组合是跨境电商（B2C/平台运营）的典型团队结构，提示企业可能依托亚马逊/Shopee/独立站等渠道开展跨境零售出口，而非传统 B2B 外贸。"
+            evidence += f"其中 {signal_text} 等岗位同时出现。"
+            interp = "岗位名称仅构成招聘职能线索；没有渠道或业务数据时，不能据此认定跨境电商团队，也不能推断 Amazon、Shopee 或独立站业务。"
         else:
-            interp = "外贸岗位结构反映国际化业务组织方式；传统外贸以单证/跟单/外贸员为主，跨境电商则叠加运营/美工/精品开发等岗位。"
+            interp = "岗位名称仅描述招聘样本中的职能标签，不能单独推断国际化业务组织方式。"
         insights.append({"feature": "外贸职能结构", "evidence": evidence, "interpretation": interp})
     # 招聘地域集中度（按城市群聚类：珠三角/长三角/其他）
     cities = core.get("recruitment_cities") or []
@@ -529,21 +665,21 @@ def build_insights(subject: Mapping[str, Any], core: Mapping[str, Any], metrics:
             total_c = sum(cluster.values())
             shares = "、".join(f"{k} {v} 城（{v / total_c * 100:.0f}%）" for k, v in sorted(cluster.items(), key=lambda kv: kv[1], reverse=True))
             insights.append({
-                "feature": "招聘地域集中度",
-                "evidence": f"招聘覆盖 {total_c} 个城市，按城市群聚类：{shares}，最高为“{top_region[0]}”。",
-                "interpretation": "招聘城市集中度反映企业人才布局与运营重心；珠三角/长三角高集中度通常对应制造业带与跨境电商集聚区，便于线下管理与供应链协同。",
+                "feature": "招聘城市样本分布",
+                "evidence": f"返回的招聘城市字段涉及 {total_c} 个城市，按城市群聚类：{shares}，样本数最高为“{top_region[0]}”。",
+                "interpretation": "该分布仅描述当前返回样本中的城市字段，不代表企业整体人才布局、运营重心、业务类型或供应链安排。",
             })
     if regions_total:
         insights.append({
-            "feature": "市场多元化",
+            "feature": "出口地区覆盖记录",
             "evidence": f"出口订单分布 {regions_total} 个国家/地区。",
-            "interpretation": "出口地区数量反映市场多元化程度；集中度过高存在单一市场风险，分散布局更稳健。",
+            "interpretation": "地区数量仅说明上游产品返回的订单地区计数，不能单独评价市场多元化程度或经营稳健性。",
         })
     if cert_count:
         insights.append({
-            "feature": "国际合规资质",
+            "feature": "海外认证记录",
             "evidence": f"海外认证共 {cert_count} 项。",
-            "interpretation": "海外认证数量反映企业进入目标市场的合规能力，常见于 CE/FCC/RoHS 等，是出口能力的硬性背书。",
+            "interpretation": "认证数量仅描述上游返回记录；需核验认证类型、适用产品、有效期及证书状态，不能据此认定合规或出口能力。",
         })
     if not insights:
         insights.append({
@@ -554,13 +690,32 @@ def build_insights(subject: Mapping[str, Any], core: Mapping[str, Any], metrics:
     return insights
 
 
-def build_abstract(subject: Mapping[str, Any], core: Mapping[str, Any], metrics: List[Mapping[str, Any]]) -> str:
+def _populated_section_titles(core: Mapping[str, Any]) -> List[str]:
+    titles: List[str] = []
+    sections = core.get("sections")
+    if not isinstance(sections, list):
+        return titles
+    for section in sections:
+        if not isinstance(section, dict):
+            continue
+        key = section.get("key")
+        title = section.get("title")
+        if isinstance(key, str) and isinstance(title, str) and _has_evidence(core.get(key)):
+            titles.append(title)
+    return titles
+
+
+def build_abstract(subject: Mapping[str, Any], core: Mapping[str, Any], metrics: Sequence[Mapping[str, Any]]) -> str:
     name = subject.get("enterprise") or subject.get("match_raw") or "目标企业"
-    parts = [f"本报告以“{name}”为分析对象，基于海关/外贸大数据，系统呈现企业出口趋势、出口产品趋势、外贸招聘画像、出口订单地区分布与海外认证。"]
+    section_titles = _populated_section_titles(core)
+    if section_titles:
+        parts = [f"本报告以“{name}”为分析对象，基于海关/外贸大数据。本次有效数据仅覆盖：{'、'.join(section_titles)}。"]
+    else:
+        parts = [f"本报告以“{name}”为分析对象；本次未返回有效海关、外贸或招聘画像章节。"]
     if metrics:
         kv = "、".join(f"{m['label']} {m['value']}" for m in metrics[:5])
         parts.append(f"关键指标包括：{kv}。")
-    parts.append("报告同时给出出口活跃度、外贸团队扩张、市场多元化与国际合规资质的结构化解读，便于外贸经营、市场拓展与合规风控决策参考。")
+    parts.append("报告仅对已返回字段与当前样本分布作结构化描述；未覆盖维度不作推断，能力、因果与未来表现需另行核验。")
     return "".join(parts)
 
 
@@ -585,7 +740,7 @@ def build_dry_run_payload(raw: str, keyword_type: str) -> Dict[str, Any]:
 # Assembly
 # --------------------------------------------------------------------------- #
 
-def _assemble(subject: Mapping[str, Any], core: Mapping[str, Any], metrics: List[Mapping[str, Any]], *, dry_run: bool) -> Dict[str, Any]:
+def _assemble(subject: Mapping[str, Any], core: Mapping[str, Any], metrics: Sequence[Mapping[str, Any]], *, dry_run: bool) -> Dict[str, Any]:
     abstract = build_abstract(subject, core, metrics)
     records = build_records(core)
     insights = build_insights(subject, core, metrics)
@@ -594,10 +749,10 @@ def _assemble(subject: Mapping[str, Any], core: Mapping[str, Any], metrics: List
     secs = ca.get("sections", [])
     if secs:
         total_secs = len(secs)
-        populated = sum(1 for s in secs if isinstance(s, dict) and ca.get(s.get("key")) not in (None, "", [], {}))
+        populated = sum(1 for s in secs if isinstance(s, dict) and _has_evidence(ca.get(s.get("key"))))
     else:
         total_secs = max(1, len([k for k in ca if k != "sections"]))
-        populated = sum(1 for k in ca if k != "sections" and ca.get(k) not in (None, "", [], {}))
+        populated = sum(1 for k in ca if k != "sections" and _has_evidence(ca.get(k)))
     quality_report = {
         "total_sections": total_secs,
         "populated_sections": populated,
@@ -607,6 +762,8 @@ def _assemble(subject: Mapping[str, Any], core: Mapping[str, Any], metrics: List
     if populated == 0:
         import sys
         print("⚠️ 质量门禁警告: 所有核心分析维度均无数据", file=sys.stderr)
+        target = subject.get("enterprise") or subject.get("match_raw") or "目标企业"
+        abstract = f"本次对“{target}”的查询未获得有效数据（海关、外贸或招聘画像均为空）；报告不据此生成出口规模、市场或认证结论。"
     title = f"{subject.get('enterprise') or '目标企业'} 海关大数据报告"
     return {
         "report_type": REPORT_TYPE,
@@ -637,15 +794,26 @@ def _assemble(subject: Mapping[str, Any], core: Mapping[str, Any], metrics: List
     }
 
 
-def build_payload(raw: str, keyword_type: str, page_size: int) -> Dict[str, Any]:
+@paid_call_scope
+def build_payload(raw: str, keyword_type: str, page_size: int, max_pages: int = 1) -> Dict[str, Any]:
+    if isinstance(max_pages, bool) or not isinstance(max_pages, int) or max_pages < 1:
+        raise ValueError("max_pages 必须为正整数")
     resolved = resolve_enterprise_name(raw)
+    if resolved.get("requires_confirmation"):
+        subject = build_subject(raw, resolved, keyword_type)
+        return _apply_resolution_limit(_assemble(subject, {"sections": []}, [], dry_run=False), resolved)
     enterprise = resolved["enterprise"]
     mk_args: Dict[str, Any] = {"matchKeyword": enterprise, "keywordType": keyword_type}
 
     trends = _safe_call(T_EXPORT_TRENDS, mk_args)
     product_trends = _safe_call(T_EXPORT_PRODUCT_TRENDS, mk_args)
     recruitment = _safe_call(T_RECRUITMENT_PROFILE, mk_args)
-    regions = _safe_call(T_ORDER_REGIONS, {"matchKeyword": enterprise, "keywordType": keyword_type, "pageIndex": 1, "pageSize": page_size})
+    regions = collect_detail_pages(
+        _safe_call, T_ORDER_REGIONS,
+        {"matchKeyword": enterprise, "keywordType": keyword_type, "pageSize": page_size},
+        get_rows=_first_list, get_total=_safe_total, is_error=_is_api_error,
+        max_pages=max_pages,
+    )
     certs = _safe_call(T_OVERSEAS_CERTS, mk_args)
 
     subject = build_subject(raw, resolved, keyword_type)
@@ -654,7 +822,9 @@ def build_payload(raw: str, keyword_type: str, page_size: int) -> Dict[str, Any]
     _derive_core_metrics(metrics, core if isinstance(core, dict) else {})
     # --- Enterprise profile enrichment (from fuzzy_search) ---
     _enrich_metrics_with_profile(metrics, resolved.get("record") if isinstance(resolved, dict) else None)
-    return _assemble(subject, core, metrics, dry_run=False)
+    report = _assemble(subject, core, metrics, dry_run=False)
+    report = _attach_call_status(report, {"出口趋势": trends, "出口产品趋势": product_trends, "外贸招聘": recruitment, "订单地区": regions, "海外认证": certs})
+    return attach_pagination(report, {"订单地区": regions})
 
 
 # --------------------------------------------------------------------------- #
@@ -666,16 +836,21 @@ def main() -> None:
     parser.add_argument("--enterprise", required=True, help="企业全称或关键词（关键词将自动模糊补全）")
     parser.add_argument("--keyword-type", default="name", help="主体类型：name/nameId/regNumber/socialCreditCode")
     parser.add_argument("--page-size", type=int, default=10, help="出口订单地区明细分页大小（最多 50）")
+    parser.add_argument("--max-pages", type=int, default=1, help="出口订单地区明细最多付费翻页数（默认 1；仅在明确需要更多结论/证据时增大）")
     parser.add_argument("--dry-run", action="store_true", help="不调用真实 MCP，使用样例数据组装报告骨架")
     parser.add_argument("--output", help="输出 JSON 路径；省略则打印到 stdout")
     parser.add_argument("--report-output", help="同时输出 HTML 报告（.html）与 Markdown 报告（.md）")
     parser.add_argument("--pdf-output", help="额外输出 PDF 报告（.pdf）；需要 Playwright + Chromium")
     args = parser.parse_args()
 
+    if not args.dry_run:
+        if args.max_pages is not None and args.max_pages < 1:
+            die("--max-pages 必须为正整数")
+
     if args.dry_run:
         payload = build_dry_run_payload(args.enterprise, args.keyword_type)
     else:
-        payload = build_payload(args.enterprise, args.keyword_type, args.page_size)
+        payload = build_payload(args.enterprise, args.keyword_type, args.page_size, args.max_pages)
 
     if args.output:
         out = pathlib.Path(args.output).expanduser()

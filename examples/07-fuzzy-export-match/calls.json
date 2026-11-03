@@ -1,0 +1,169 @@
+[
+  {
+    "tool": "customs_bigdata_fuzzy_search",
+    "domain": null,
+    "arguments": {
+      "matchKeyword": "美的集团",
+      "pageSize": 10
+    },
+    "invocation_id": "1793068951590166000",
+    "elapsed_seconds": 1.31,
+    "status": "data",
+    "error_category": null,
+    "result_type": "dict",
+    "top_level_fields": [
+      "resultList",
+      "total"
+    ],
+    "row_count": 10,
+    "reported_total": 455,
+    "numeric_evidence": [
+      {
+        "path": "resultList[0].regCapitalValue",
+        "value": 7606439151.0
+      },
+      {
+        "path": "resultList[1].regCapitalValue",
+        "value": 100000000.0
+      },
+      {
+        "path": "resultList[2].regCapitalValue",
+        "value": 3500000000.0
+      },
+      {
+        "path": "resultList[3].regCapitalValue",
+        "value": 8000000.0
+      },
+      {
+        "path": "resultList[4].regCapitalValue",
+        "value": 9890225332.0
+      },
+      {
+        "path": "total",
+        "value": 455
+      }
+    ],
+    "response_sha256": "ced2330ac99e5e59de7561322b80848f5540e4932e00879f78df9950aae6375f"
+  },
+  {
+    "tool": "customs_bigdata_export_trends",
+    "domain": null,
+    "arguments": {
+      "matchKeyword": "美的集团",
+      "keywordType": "name"
+    },
+    "invocation_id": "1793068951590166000",
+    "elapsed_seconds": 0.992,
+    "status": "empty",
+    "error_category": null,
+    "result_type": "dict",
+    "top_level_fields": [
+      "text"
+    ],
+    "row_count": null,
+    "reported_total": null,
+    "numeric_evidence": [],
+    "response_sha256": "b2da0c4c26e517e5a1eae0af2a20ca47c52ef51906cf1c3dfa2fe10a67cc714c"
+  },
+  {
+    "tool": "customs_bigdata_export_product_trends",
+    "domain": null,
+    "arguments": {
+      "matchKeyword": "美的集团",
+      "keywordType": "name"
+    },
+    "invocation_id": "1793068951590166000",
+    "elapsed_seconds": 0.205,
+    "status": "empty",
+    "error_category": null,
+    "result_type": "dict",
+    "top_level_fields": [
+      "text"
+    ],
+    "row_count": null,
+    "reported_total": null,
+    "numeric_evidence": [],
+    "response_sha256": "b2da0c4c26e517e5a1eae0af2a20ca47c52ef51906cf1c3dfa2fe10a67cc714c"
+  },
+  {
+    "tool": "customs_bigdata_export_recruitment_profile",
+    "domain": null,
+    "arguments": {
+      "matchKeyword": "美的集团",
+      "keywordType": "name"
+    },
+    "invocation_id": "1793068951590166000",
+    "elapsed_seconds": 0.275,
+    "status": "data",
+    "error_category": null,
+    "result_type": "dict",
+    "top_level_fields": [
+      "recruitingCityCount",
+      "recruitingCityList",
+      "recruitingCount",
+      "recruitingPlatforms",
+      "recruitingPositions",
+      "recruitingSourceCount",
+      "recruitingSourceList"
+    ],
+    "row_count": null,
+    "reported_total": null,
+    "numeric_evidence": [
+      {
+        "path": "recruitingCityCount",
+        "value": 4
+      },
+      {
+        "path": "recruitingCount",
+        "value": 354
+      },
+      {
+        "path": "recruitingSourceCount",
+        "value": 3
+      }
+    ],
+    "response_sha256": "39edf56d99db79112745063907e0babfd9c0ccd36da6c48a6c231622dd3cce7d"
+  },
+  {
+    "tool": "customs_bigdata_export_order_regions",
+    "domain": null,
+    "arguments": {
+      "matchKeyword": "美的集团",
+      "keywordType": "name",
+      "pageIndex": 1,
+      "pageSize": 8
+    },
+    "invocation_id": "1793068951590166000",
+    "elapsed_seconds": 0.453,
+    "status": "empty",
+    "error_category": null,
+    "result_type": "dict",
+    "top_level_fields": [
+      "text"
+    ],
+    "row_count": null,
+    "reported_total": null,
+    "numeric_evidence": [],
+    "response_sha256": "b2da0c4c26e517e5a1eae0af2a20ca47c52ef51906cf1c3dfa2fe10a67cc714c"
+  },
+  {
+    "tool": "customs_bigdata_overseas_certifications",
+    "domain": null,
+    "arguments": {
+      "matchKeyword": "美的集团",
+      "keywordType": "name"
+    },
+    "invocation_id": "1793068951590166000",
+    "elapsed_seconds": 0.706,
+    "status": "empty",
+    "error_category": null,
+    "result_type": "dict",
+    "top_level_fields": [
+      "text"
+    ],
+    "row_count": null,
+    "reported_total": null,
+    "numeric_evidence": [],
+    "response_sha256": "b2da0c4c26e517e5a1eae0af2a20ca47c52ef51906cf1c3dfa2fe10a67cc714c"
+  }
+]

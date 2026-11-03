@@ -1,0 +1,46 @@
+{
+  "metric_overflows": [],
+  "document_title": "宁德时代新能源科技股份有限公司 海关大数据报告",
+  "title_matches": true,
+  "charts": 3,
+  "rendered_charts": 3,
+  "zero_size_charts": 0,
+  "chart_details": [
+    {
+      "width": 984,
+      "height": 300,
+      "instance": true,
+      "renderer": true,
+      "graphics": 87
+    },
+    {
+      "width": 984,
+      "height": 300,
+      "instance": true,
+      "renderer": true,
+      "graphics": 61
+    },
+    {
+      "width": 984,
+      "height": 300,
+      "instance": true,
+      "renderer": true,
+      "graphics": 55
+    }
+  ],
+  "page_width": 1905,
+  "viewport_width": 1920,
+  "empty_headers": 0,
+  "script_errors": [],
+  "external_resources": 0,
+  "external_asset_references": 0,
+  "ok": true,
+  "report_html_sha256": "1adb8df7ab2cfd748ba7ee3fa18b42724b3eee7f8ca45d2debe35286a2b21884",
+  "report_json_sha256": "ac1c089f0c92ec2e56959a74ad0cc9f654af05845f637db296485e7cb535bd18",
+  "skill": "customs-skill",
+  "id": "02-battery-export",
+  "browser": "Ego Lite",
+  "space_id": 4,
+  "offline": true,
+  "checked_at": "2026-10-27T03:02:29.190Z"
+}

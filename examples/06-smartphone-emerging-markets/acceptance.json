@@ -1,0 +1,164 @@
+{
+  "schema_version": 1,
+  "skill": "customs-skill",
+  "case_id": "06-smartphone-emerging-markets",
+  "title": "手机厂商出口地区",
+  "invocation_id": "1793068948819501000",
+  "provenance": {
+    "integrator_id": "683e574805537ace146cc05e",
+    "runner_sha256": "05777c2f2b0791cb5157aef691206606dade8df7af3b17212285b7ae74632a66",
+    "credential_policy_sha256": "bcabf08a1ca92f28357c0e57a8bae9bfa910eb1d4b204d8195ee3b7a77106eed",
+    "scenario_sha256": "be08dc3bf7de5f7d4d4b5bdfd7283c097039309179edadea6299efe02e11f9ce",
+    "skill_source_hashes": {
+      "scripts/common.py": "6b53c8e8fb28b67140124f6ab4be71facbc38aebc0beca97a4acc4295ed8c729",
+      "scripts/compose_report.py": "4dc2bb391d3ddc44d06131e42538f581b744c40a2582d8d84b574586216716d7",
+      "scripts/mcp_client.py": "aee6f11e900798d633aa553e7e23a9346fa71bdae2b79a1513b8bd65e74dc74e",
+      "scripts/render_report.py": "c62bff9dcbe5f1d471707b235acfdd62c958656422bcf009d643273d745de7c4",
+      "scripts/validate_config.py": "386c7fab5b6464e3bc2c1e344b0f46ec2ad49fa9d3d3f032b92ef0e7ad9460da"
+    },
+    "upstream_source_hashes": {
+      "customs-mcp-server": "3be7f35f814f1b87cb862d339c9bc2a0fd8bbff082d552798017a3303895712a"
+    },
+    "upstream_dependency_hashes": {
+      "customs-mcp-server/server/mcp_server.py": "3be7f35f814f1b87cb862d339c9bc2a0fd8bbff082d552798017a3303895712a"
+    }
+  },
+  "source_changed_during_run": false,
+  "started_at": "2026-10-27T10:42:28+08:00",
+  "elapsed_seconds": 5.143,
+  "returncode": 0,
+  "exception_type": null,
+  "command": "python3 customs-skill/scripts/compose_report.py --enterprise '深圳传音控股股份有限公司' --page-size 10 --output customs-skill/output/live-replaced-20261027/06-smartphone-emerging-markets/report.json --report-output customs-skill/output/live-replaced-20261027/06-smartphone-emerging-markets/report.html",
+  "transport": "local MCP servers via loopback streamable-http",
+  "cache_used": false,
+  "call_count": 5,
+  "successful_data_calls": 4,
+  "empty_calls": 1,
+  "failed_calls": 0,
+  "checks": {
+    "issues": [],
+    "warnings": [],
+    "coverage_pct": 80,
+    "subject": {
+      "enterprise": "深圳传音控股股份有限公司",
+      "matchKeyword": "深圳传音控股股份有限公司",
+      "keywordType": "name",
+      "match_raw": "深圳传音控股股份有限公司",
+      "resolved": true,
+      "resolve_reason": "用户提供企业全称"
+    },
+    "title": "深圳传音控股股份有限公司 海关大数据报告",
+    "data_mode": null,
+    "metrics": [
+      {
+        "label": "出口年份覆盖",
+        "value": "2 年",
+        "hint": "出口趋势所涉年份数"
+      },
+      {
+        "label": "累计外贸招聘",
+        "value": "21956",
+        "hint": "历史累计外贸相关岗位招聘总数（recruitingCount）"
+      },
+      {
+        "label": "近三月外贸招聘",
+        "value": "1612",
+        "hint": "近三个月外贸相关岗位招聘数"
+      },
+      {
+        "label": "出口地区总数",
+        "value": "2",
+        "hint": "上游响应 total，可能大于当前页展示数量"
+      },
+      {
+        "label": "出口年份",
+        "value": "2",
+        "hint": "有出口记录的年度数"
+      },
+      {
+        "label": "出口产品数",
+        "value": "2",
+        "hint": "不同HS编码的出口产品数"
+      },
+      {
+        "label": "当前页展示地区数",
+        "value": "2",
+        "hint": "当前页 resultList 返回的地区明细行数"
+      },
+      {
+        "label": "当前页地区CR3",
+        "value": "100.0%",
+        "hint": "仅按当前页返回记录计算的前3地区订单占比"
+      }
+    ],
+    "quality_report": {
+      "total_sections": 5,
+      "populated_sections": 4,
+      "empty_sections": 1,
+      "coverage_pct": 80
+    },
+    "unregistered_tools": [],
+    "checks": {
+      "json_html_markdown": true,
+      "explicit_live": true,
+      "tool_calls_recorded": 5,
+      "offline_scripts": true,
+      "independent_rerender": true,
+      "offline_browser": true
+    }
+  },
+  "status": "passed",
+  "source_hashes": {
+    "scripts/common.py": "6b53c8e8fb28b67140124f6ab4be71facbc38aebc0beca97a4acc4295ed8c729",
+    "scripts/compose_report.py": "4dc2bb391d3ddc44d06131e42538f581b744c40a2582d8d84b574586216716d7",
+    "scripts/mcp_client.py": "aee6f11e900798d633aa553e7e23a9346fa71bdae2b79a1513b8bd65e74dc74e",
+    "scripts/render_report.py": "c62bff9dcbe5f1d471707b235acfdd62c958656422bcf009d643273d745de7c4",
+    "scripts/validate_config.py": "386c7fab5b6464e3bc2c1e344b0f46ec2ad49fa9d3d3f032b92ef0e7ad9460da"
+  },
+  "technical_status": "passed",
+  "audited_at": "2026-10-27T11:12:57+08:00",
+  "evidence_binding": {
+    "report.json": "475b88865d2556a958cf7641eb67dbce87f8713efcf5e9cf9b0bb18abf6c94f6",
+    "report.html": "db3e10dfc43d2a9a8a2dad75aba2972c2b791db2c270aa00e9c4ba7ee561b771",
+    "report.md": "2e76ffa3999c31dd76133ad45232dd4666d52bffd9a4411b84a6d4853647f210",
+    "calls.json": "85f15655767d9c00f071a55eb8b92b64b4e6a15e09709ea953da718c98c5007e",
+    "result.json": "ee1a7a80af2a690a056dd6f09f55186658ddeff920bb3c19ff43e6b79bfdc862",
+    "source_manifest_sha256": "014e0c39ccd221d4b037bfafc75dc705b73521da54c003be18fa8ca62d4dab92"
+  },
+  "business_review": {
+    "id": "06-smartphone-emerging-markets",
+    "verdict": "acceptable",
+    "summary": "已重新读取并绑定本轮正式产物；第六轮三种报告完整保留数值0、地区和HS明细，并严格区分产品、地区及总量/当前页口径。",
+    "checks": [
+      {
+        "expectation": "地区记录字段可读",
+        "status": "pass",
+        "evidence": "针对“地区记录字段可读”复核当前冻结产物。本轮三种格式标题一致（JSON/HTML/Markdown；html=db3e10dfc43d）；技术状态=passed、真实data调用=4；主体={\"enterprise\":\"深圳传音控股股份有限公司\",\"matchKeyword\":\"深圳传音控股股份有限公司\",\"keywordType\":\"name\",\"match_raw\":\"深圳传音控股股份有限公司\",\"resolved\":true,\"resolve_reason\":\"用户提供企业全称\"}；调用=[{\"tool\":\"customs_bigdata_export_trends\",\"status\":\"data\",\"rows\":null,\"total\":2},{\"tool\":\"customs_bigdata_export_product_trends\",\"status\":\"data\",\"rows\":null,\"total\":null},{\"tool\":\"customs_bigdata_export_recruitment_profile\",\"status\":\"data\",\"rows\":null,\"total\":null},{\"tool\":\"customs_bigdata_export_order_regions\",\"status\":\"data\",\"rows\":2,\"total\":2},{\"tool\":\"customs_bigdata_overseas_certifications\",\"status\":\"empty\",\"rows\":null,\"total\":null}]；质量={\"total_sections\":5,\"populated_sections\":4,\"empty_sections\":1,\"coverage_pct\":80}；章节=[{\"title\":\"出口趋势\",\"records\":2},{\"title\":\"出口产品趋势\",\"records\":2},{\"title\":\"外贸招聘画像\",\"records\":8},{\"title\":\"出口订单地区分布\",\"records\":2},{\"title\":\"海外认证\",\"records\":0}]；指标=[{\"label\":\"出口年份覆盖\",\"value\":\"2 年\",\"hint\":\"出口趋势所涉年份数\"},{\"label\":\"累计外贸招聘\",\"value\":\"21956\",\"hint\":\"历史累计外贸相关岗位招聘总数（recruitingCount）\"},{\"label\":\"近三月外贸招聘\",\"value\":\"1612\",\"hint\":\"近三个月外贸相关岗位招聘数\"},{\"label\":\"出口地区总数\",\"value\":\"2\",\"hint\":\"上游响应 total，可能大于当前页展示数量\"},{\"label\":\"出口年份\",\"value\":\"2\",\"hint\":\"有出口记录的年度数\"},{\"label\":\"出口产品数\",\"value\":\"2\",\"hint\":\"不同HS编码的出口产品数\"},{\"label\":\"当前页展示地区数\",\"value\":\"2\",\"hint\":\"当前页 resultList 返回的地区明细行数\"},{\"label\":\"当前页地区CR3\",\"value\":\"100.0%\",\"hint\":\"仅按当前页返回记录计算的前3地区订单占比\"}]；章节样本=[{\"title\":\"出口趋势\",\"sample\":{\"年份\":\"2017\",\"出口金额(美元)\":\"0.0\",\"订单数量\":\"1\"}},{\"title\":\"出口产品趋势\",\"sample\":{\"HS 商品编码\":\"8517120000\",\"订单数量\":\"1\"}},{\"title\":\"外贸招聘画像\",\"sample\":{\"近三个月招聘岗位数\":\"1612\",\"招聘岗位数\":\"21956\",\"招聘城市数量\":\"26\",\"招聘城市\":\"义乌市、澄迈市、金华市、广州市、塞内加尔市、杭州市、深圳市、嘉兴市、海外市、佛山市、肯尼亚市、不限市、南昌市、铜仁市、河源市\",\"招聘岗位\":\"海外广告投放、客服、外贸员、其他、美工、精品开发、运营\",\"招聘渠道数量\":\"16\",\"招聘渠道\":\"58、Boss直聘、yupao、智联招聘、职友集、mohrss、yingjiesheng、36hjob、jobs.51job、hunt007、百大英才网、福建人才网、拉勾网、百度招聘、汇博网\",\"外贸相关平台\":\"美客多、noon、allegro、Walmart、Tokopedia、SHEIN、Ozon、速卖通、其他、阿里巴巴国际站、亚马逊、eBay、敦煌网、shopify、Wildberries\"}},{\"title\":\"出口订单地区分布\",\"sample\":{\"国家/地区\":\"哥伦比亚\",\"订单数\":\"1\",\"金额(美元)\":\"0.0\",\"净重(千克)\":\"0.3400000035762787\"}}]；代表记录=[{\"国家/地区\":\"哥伦比亚\",\"订单数\":\"1\",\"金额(美元)\":\"0.0\"},{\"国家/地区\":\"美国\",\"订单数\":\"1\",\"金额(美元)\":\"0.0\"}]；解释边界=[{\"feature\":\"出口活跃度\",\"evidence\":\"出口趋势覆盖 2 年。出口金额均为上游原值 0；金额字段覆盖口径未验证，不据此判断出口规模或价格变化；订单量峰值在“2017”（1 笔），近年持平。\",\"interpretation\":\"年度金额与订单数仅按各自字段描述；当前年度为 YTD 时不与完整年度直接同比，跨年缺口也不标作同比。\"},{\"feature\":\"核心出口品类\",\"evidence\":\"“HS 8517120000”为订单最多的品类，占比约 50%，前 3 类合计 100%（CR3）。\",\"interpretation\":\"HS 编码占比仅描述当前返回样本中订单数量的分布与集中程度，不代表产品竞争力、售价或市场份额。\"},{\"feature\":\"出口市场集中度\",\"evidence\":\"当前页样本中，“哥伦比亚”订单数最多，占比约 50%，前 3 地区合计 100%（当前页 CR3）。\",\"interpretation\":\"地区占比仅描述当前返回订单样本的分布，不能据此判断企业整体市场结构、政策风险或订单可持续性。\"},{\"feature\":\"外贸招聘记录\",\"evidence\":\"近三个月外贸相关岗位招聘 1612 人。\",\"interpretation\":\"该值只说明历史招聘数据中出现外贸相关岗位，不能单独证明出口增长、产能或新市场开拓。\"},{\"feature\":\"外贸职能结构\",\"evidence\":\"招聘职能覆盖：海外广告投放、客服、外贸员、其他、美工、精品开发、运营。其中 外贸员、美工、精品开发、运营 等岗位同时出现。\",\"interpretation\":\"岗位名称仅构成招聘职能线索；没有渠道或业务数据时，不能据此认定跨境电商团队，也不能推断 Amazon、Shopee 或独立站业务。\"},{\"feature\":\"招聘城市样本分布\",\"evidence\":\"返回的招聘城市字段涉及 26 个城市，按城市群聚类：其他 16 城（62%）、长三角 6 城（23%）、珠三角 3 城（12%）、京津冀 1 城（4%），样本数最高为“其他”。\",\"interpretation\":\"该分布仅描述当前返回样本中的城市字段，不代表企业整体人才布局、运营重心、业务类型或供应链安排。\"},{\"feature\":\"出口地区覆盖记录\",\"evidence\":\"出口订单分布 2 个国家/地区。\",\"interpretation\":\"地区数量仅说明上游产品返回的订单地区计数，不能单独评价市场多元化程度或经营稳健性。\"}]。"
+      },
+      {
+        "expectation": "出口产品趋势与地区样本不交叉误推",
+        "status": "pass",
+        "evidence": "针对“出口产品趋势与地区样本不交叉误推”复核当前冻结产物。本轮三种格式标题一致（JSON/HTML/Markdown；html=db3e10dfc43d）；技术状态=passed、真实data调用=4；主体={\"enterprise\":\"深圳传音控股股份有限公司\",\"matchKeyword\":\"深圳传音控股股份有限公司\",\"keywordType\":\"name\",\"match_raw\":\"深圳传音控股股份有限公司\",\"resolved\":true,\"resolve_reason\":\"用户提供企业全称\"}；调用=[{\"tool\":\"customs_bigdata_export_trends\",\"status\":\"data\",\"rows\":null,\"total\":2},{\"tool\":\"customs_bigdata_export_product_trends\",\"status\":\"data\",\"rows\":null,\"total\":null},{\"tool\":\"customs_bigdata_export_recruitment_profile\",\"status\":\"data\",\"rows\":null,\"total\":null},{\"tool\":\"customs_bigdata_export_order_regions\",\"status\":\"data\",\"rows\":2,\"total\":2},{\"tool\":\"customs_bigdata_overseas_certifications\",\"status\":\"empty\",\"rows\":null,\"total\":null}]；质量={\"total_sections\":5,\"populated_sections\":4,\"empty_sections\":1,\"coverage_pct\":80}；章节=[{\"title\":\"出口趋势\",\"records\":2},{\"title\":\"出口产品趋势\",\"records\":2},{\"title\":\"外贸招聘画像\",\"records\":8},{\"title\":\"出口订单地区分布\",\"records\":2},{\"title\":\"海外认证\",\"records\":0}]；指标=[{\"label\":\"出口年份覆盖\",\"value\":\"2 年\",\"hint\":\"出口趋势所涉年份数\"},{\"label\":\"累计外贸招聘\",\"value\":\"21956\",\"hint\":\"历史累计外贸相关岗位招聘总数（recruitingCount）\"},{\"label\":\"近三月外贸招聘\",\"value\":\"1612\",\"hint\":\"近三个月外贸相关岗位招聘数\"},{\"label\":\"出口地区总数\",\"value\":\"2\",\"hint\":\"上游响应 total，可能大于当前页展示数量\"},{\"label\":\"出口年份\",\"value\":\"2\",\"hint\":\"有出口记录的年度数\"},{\"label\":\"出口产品数\",\"value\":\"2\",\"hint\":\"不同HS编码的出口产品数\"},{\"label\":\"当前页展示地区数\",\"value\":\"2\",\"hint\":\"当前页 resultList 返回的地区明细行数\"},{\"label\":\"当前页地区CR3\",\"value\":\"100.0%\",\"hint\":\"仅按当前页返回记录计算的前3地区订单占比\"}]；章节样本=[{\"title\":\"出口趋势\",\"sample\":{\"年份\":\"2017\",\"出口金额(美元)\":\"0.0\",\"订单数量\":\"1\"}},{\"title\":\"出口产品趋势\",\"sample\":{\"HS 商品编码\":\"8517120000\",\"订单数量\":\"1\"}},{\"title\":\"外贸招聘画像\",\"sample\":{\"近三个月招聘岗位数\":\"1612\",\"招聘岗位数\":\"21956\",\"招聘城市数量\":\"26\",\"招聘城市\":\"义乌市、澄迈市、金华市、广州市、塞内加尔市、杭州市、深圳市、嘉兴市、海外市、佛山市、肯尼亚市、不限市、南昌市、铜仁市、河源市\",\"招聘岗位\":\"海外广告投放、客服、外贸员、其他、美工、精品开发、运营\",\"招聘渠道数量\":\"16\",\"招聘渠道\":\"58、Boss直聘、yupao、智联招聘、职友集、mohrss、yingjiesheng、36hjob、jobs.51job、hunt007、百大英才网、福建人才网、拉勾网、百度招聘、汇博网\",\"外贸相关平台\":\"美客多、noon、allegro、Walmart、Tokopedia、SHEIN、Ozon、速卖通、其他、阿里巴巴国际站、亚马逊、eBay、敦煌网、shopify、Wildberries\"}},{\"title\":\"出口订单地区分布\",\"sample\":{\"国家/地区\":\"哥伦比亚\",\"订单数\":\"1\",\"金额(美元)\":\"0.0\",\"净重(千克)\":\"0.3400000035762787\"}}]；代表记录=[{\"国家/地区\":\"哥伦比亚\",\"订单数\":\"1\",\"金额(美元)\":\"0.0\"},{\"国家/地区\":\"美国\",\"订单数\":\"1\",\"金额(美元)\":\"0.0\"}]；解释边界=[{\"feature\":\"出口活跃度\",\"evidence\":\"出口趋势覆盖 2 年。出口金额均为上游原值 0；金额字段覆盖口径未验证，不据此判断出口规模或价格变化；订单量峰值在“2017”（1 笔），近年持平。\",\"interpretation\":\"年度金额与订单数仅按各自字段描述；当前年度为 YTD 时不与完整年度直接同比，跨年缺口也不标作同比。\"},{\"feature\":\"核心出口品类\",\"evidence\":\"“HS 8517120000”为订单最多的品类，占比约 50%，前 3 类合计 100%（CR3）。\",\"interpretation\":\"HS 编码占比仅描述当前返回样本中订单数量的分布与集中程度，不代表产品竞争力、售价或市场份额。\"},{\"feature\":\"出口市场集中度\",\"evidence\":\"当前页样本中，“哥伦比亚”订单数最多，占比约 50%，前 3 地区合计 100%（当前页 CR3）。\",\"interpretation\":\"地区占比仅描述当前返回订单样本的分布，不能据此判断企业整体市场结构、政策风险或订单可持续性。\"},{\"feature\":\"外贸招聘记录\",\"evidence\":\"近三个月外贸相关岗位招聘 1612 人。\",\"interpretation\":\"该值只说明历史招聘数据中出现外贸相关岗位，不能单独证明出口增长、产能或新市场开拓。\"},{\"feature\":\"外贸职能结构\",\"evidence\":\"招聘职能覆盖：海外广告投放、客服、外贸员、其他、美工、精品开发、运营。其中 外贸员、美工、精品开发、运营 等岗位同时出现。\",\"interpretation\":\"岗位名称仅构成招聘职能线索；没有渠道或业务数据时，不能据此认定跨境电商团队，也不能推断 Amazon、Shopee 或独立站业务。\"},{\"feature\":\"招聘城市样本分布\",\"evidence\":\"返回的招聘城市字段涉及 26 个城市，按城市群聚类：其他 16 城（62%）、长三角 6 城（23%）、珠三角 3 城（12%）、京津冀 1 城（4%），样本数最高为“其他”。\",\"interpretation\":\"该分布仅描述当前返回样本中的城市字段，不代表企业整体人才布局、运营重心、业务类型或供应链安排。\"},{\"feature\":\"出口地区覆盖记录\",\"evidence\":\"出口订单分布 2 个国家/地区。\",\"interpretation\":\"地区数量仅说明上游产品返回的订单地区计数，不能单独评价市场多元化程度或经营稳健性。\"}]。"
+      },
+      {
+        "expectation": "总量与当前页明确区分",
+        "status": "pass",
+        "evidence": "针对“总量与当前页明确区分”复核当前冻结产物。本轮三种格式标题一致（JSON/HTML/Markdown；html=db3e10dfc43d）；技术状态=passed、真实data调用=4；主体={\"enterprise\":\"深圳传音控股股份有限公司\",\"matchKeyword\":\"深圳传音控股股份有限公司\",\"keywordType\":\"name\",\"match_raw\":\"深圳传音控股股份有限公司\",\"resolved\":true,\"resolve_reason\":\"用户提供企业全称\"}；调用=[{\"tool\":\"customs_bigdata_export_trends\",\"status\":\"data\",\"rows\":null,\"total\":2},{\"tool\":\"customs_bigdata_export_product_trends\",\"status\":\"data\",\"rows\":null,\"total\":null},{\"tool\":\"customs_bigdata_export_recruitment_profile\",\"status\":\"data\",\"rows\":null,\"total\":null},{\"tool\":\"customs_bigdata_export_order_regions\",\"status\":\"data\",\"rows\":2,\"total\":2},{\"tool\":\"customs_bigdata_overseas_certifications\",\"status\":\"empty\",\"rows\":null,\"total\":null}]；质量={\"total_sections\":5,\"populated_sections\":4,\"empty_sections\":1,\"coverage_pct\":80}；章节=[{\"title\":\"出口趋势\",\"records\":2},{\"title\":\"出口产品趋势\",\"records\":2},{\"title\":\"外贸招聘画像\",\"records\":8},{\"title\":\"出口订单地区分布\",\"records\":2},{\"title\":\"海外认证\",\"records\":0}]；指标=[{\"label\":\"出口年份覆盖\",\"value\":\"2 年\",\"hint\":\"出口趋势所涉年份数\"},{\"label\":\"累计外贸招聘\",\"value\":\"21956\",\"hint\":\"历史累计外贸相关岗位招聘总数（recruitingCount）\"},{\"label\":\"近三月外贸招聘\",\"value\":\"1612\",\"hint\":\"近三个月外贸相关岗位招聘数\"},{\"label\":\"出口地区总数\",\"value\":\"2\",\"hint\":\"上游响应 total，可能大于当前页展示数量\"},{\"label\":\"出口年份\",\"value\":\"2\",\"hint\":\"有出口记录的年度数\"},{\"label\":\"出口产品数\",\"value\":\"2\",\"hint\":\"不同HS编码的出口产品数\"},{\"label\":\"当前页展示地区数\",\"value\":\"2\",\"hint\":\"当前页 resultList 返回的地区明细行数\"},{\"label\":\"当前页地区CR3\",\"value\":\"100.0%\",\"hint\":\"仅按当前页返回记录计算的前3地区订单占比\"}]；章节样本=[{\"title\":\"出口趋势\",\"sample\":{\"年份\":\"2017\",\"出口金额(美元)\":\"0.0\",\"订单数量\":\"1\"}},{\"title\":\"出口产品趋势\",\"sample\":{\"HS 商品编码\":\"8517120000\",\"订单数量\":\"1\"}},{\"title\":\"外贸招聘画像\",\"sample\":{\"近三个月招聘岗位数\":\"1612\",\"招聘岗位数\":\"21956\",\"招聘城市数量\":\"26\",\"招聘城市\":\"义乌市、澄迈市、金华市、广州市、塞内加尔市、杭州市、深圳市、嘉兴市、海外市、佛山市、肯尼亚市、不限市、南昌市、铜仁市、河源市\",\"招聘岗位\":\"海外广告投放、客服、外贸员、其他、美工、精品开发、运营\",\"招聘渠道数量\":\"16\",\"招聘渠道\":\"58、Boss直聘、yupao、智联招聘、职友集、mohrss、yingjiesheng、36hjob、jobs.51job、hunt007、百大英才网、福建人才网、拉勾网、百度招聘、汇博网\",\"外贸相关平台\":\"美客多、noon、allegro、Walmart、Tokopedia、SHEIN、Ozon、速卖通、其他、阿里巴巴国际站、亚马逊、eBay、敦煌网、shopify、Wildberries\"}},{\"title\":\"出口订单地区分布\",\"sample\":{\"国家/地区\":\"哥伦比亚\",\"订单数\":\"1\",\"金额(美元)\":\"0.0\",\"净重(千克)\":\"0.3400000035762787\"}}]；代表记录=[{\"国家/地区\":\"哥伦比亚\",\"订单数\":\"1\",\"金额(美元)\":\"0.0\"},{\"国家/地区\":\"美国\",\"订单数\":\"1\",\"金额(美元)\":\"0.0\"}]；解释边界=[{\"feature\":\"出口活跃度\",\"evidence\":\"出口趋势覆盖 2 年。出口金额均为上游原值 0；金额字段覆盖口径未验证，不据此判断出口规模或价格变化；订单量峰值在“2017”（1 笔），近年持平。\",\"interpretation\":\"年度金额与订单数仅按各自字段描述；当前年度为 YTD 时不与完整年度直接同比，跨年缺口也不标作同比。\"},{\"feature\":\"核心出口品类\",\"evidence\":\"“HS 8517120000”为订单最多的品类，占比约 50%，前 3 类合计 100%（CR3）。\",\"interpretation\":\"HS 编码占比仅描述当前返回样本中订单数量的分布与集中程度，不代表产品竞争力、售价或市场份额。\"},{\"feature\":\"出口市场集中度\",\"evidence\":\"当前页样本中，“哥伦比亚”订单数最多，占比约 50%，前 3 地区合计 100%（当前页 CR3）。\",\"interpretation\":\"地区占比仅描述当前返回订单样本的分布，不能据此判断企业整体市场结构、政策风险或订单可持续性。\"},{\"feature\":\"外贸招聘记录\",\"evidence\":\"近三个月外贸相关岗位招聘 1612 人。\",\"interpretation\":\"该值只说明历史招聘数据中出现外贸相关岗位，不能单独证明出口增长、产能或新市场开拓。\"},{\"feature\":\"外贸职能结构\",\"evidence\":\"招聘职能覆盖：海外广告投放、客服、外贸员、其他、美工、精品开发、运营。其中 外贸员、美工、精品开发、运营 等岗位同时出现。\",\"interpretation\":\"岗位名称仅构成招聘职能线索；没有渠道或业务数据时，不能据此认定跨境电商团队，也不能推断 Amazon、Shopee 或独立站业务。\"},{\"feature\":\"招聘城市样本分布\",\"evidence\":\"返回的招聘城市字段涉及 26 个城市，按城市群聚类：其他 16 城（62%）、长三角 6 城（23%）、珠三角 3 城（12%）、京津冀 1 城（4%），样本数最高为“其他”。\",\"interpretation\":\"该分布仅描述当前返回样本中的城市字段，不代表企业整体人才布局、运营重心、业务类型或供应链安排。\"},{\"feature\":\"出口地区覆盖记录\",\"evidence\":\"出口订单分布 2 个国家/地区。\",\"interpretation\":\"地区数量仅说明上游产品返回的订单地区计数，不能单独评价市场多元化程度或经营稳健性。\"}]。"
+      },
+      {
+        "expectation": "无国家字段时不自行补全",
+        "status": "pass",
+        "evidence": "针对“无国家字段时不自行补全”复核当前冻结产物。本轮三种格式标题一致（JSON/HTML/Markdown；html=db3e10dfc43d）；技术状态=passed、真实data调用=4；主体={\"enterprise\":\"深圳传音控股股份有限公司\",\"matchKeyword\":\"深圳传音控股股份有限公司\",\"keywordType\":\"name\",\"match_raw\":\"深圳传音控股股份有限公司\",\"resolved\":true,\"resolve_reason\":\"用户提供企业全称\"}；调用=[{\"tool\":\"customs_bigdata_export_trends\",\"status\":\"data\",\"rows\":null,\"total\":2},{\"tool\":\"customs_bigdata_export_product_trends\",\"status\":\"data\",\"rows\":null,\"total\":null},{\"tool\":\"customs_bigdata_export_recruitment_profile\",\"status\":\"data\",\"rows\":null,\"total\":null},{\"tool\":\"customs_bigdata_export_order_regions\",\"status\":\"data\",\"rows\":2,\"total\":2},{\"tool\":\"customs_bigdata_overseas_certifications\",\"status\":\"empty\",\"rows\":null,\"total\":null}]；质量={\"total_sections\":5,\"populated_sections\":4,\"empty_sections\":1,\"coverage_pct\":80}；章节=[{\"title\":\"出口趋势\",\"records\":2},{\"title\":\"出口产品趋势\",\"records\":2},{\"title\":\"外贸招聘画像\",\"records\":8},{\"title\":\"出口订单地区分布\",\"records\":2},{\"title\":\"海外认证\",\"records\":0}]；指标=[{\"label\":\"出口年份覆盖\",\"value\":\"2 年\",\"hint\":\"出口趋势所涉年份数\"},{\"label\":\"累计外贸招聘\",\"value\":\"21956\",\"hint\":\"历史累计外贸相关岗位招聘总数（recruitingCount）\"},{\"label\":\"近三月外贸招聘\",\"value\":\"1612\",\"hint\":\"近三个月外贸相关岗位招聘数\"},{\"label\":\"出口地区总数\",\"value\":\"2\",\"hint\":\"上游响应 total，可能大于当前页展示数量\"},{\"label\":\"出口年份\",\"value\":\"2\",\"hint\":\"有出口记录的年度数\"},{\"label\":\"出口产品数\",\"value\":\"2\",\"hint\":\"不同HS编码的出口产品数\"},{\"label\":\"当前页展示地区数\",\"value\":\"2\",\"hint\":\"当前页 resultList 返回的地区明细行数\"},{\"label\":\"当前页地区CR3\",\"value\":\"100.0%\",\"hint\":\"仅按当前页返回记录计算的前3地区订单占比\"}]；章节样本=[{\"title\":\"出口趋势\",\"sample\":{\"年份\":\"2017\",\"出口金额(美元)\":\"0.0\",\"订单数量\":\"1\"}},{\"title\":\"出口产品趋势\",\"sample\":{\"HS 商品编码\":\"8517120000\",\"订单数量\":\"1\"}},{\"title\":\"外贸招聘画像\",\"sample\":{\"近三个月招聘岗位数\":\"1612\",\"招聘岗位数\":\"21956\",\"招聘城市数量\":\"26\",\"招聘城市\":\"义乌市、澄迈市、金华市、广州市、塞内加尔市、杭州市、深圳市、嘉兴市、海外市、佛山市、肯尼亚市、不限市、南昌市、铜仁市、河源市\",\"招聘岗位\":\"海外广告投放、客服、外贸员、其他、美工、精品开发、运营\",\"招聘渠道数量\":\"16\",\"招聘渠道\":\"58、Boss直聘、yupao、智联招聘、职友集、mohrss、yingjiesheng、36hjob、jobs.51job、hunt007、百大英才网、福建人才网、拉勾网、百度招聘、汇博网\",\"外贸相关平台\":\"美客多、noon、allegro、Walmart、Tokopedia、SHEIN、Ozon、速卖通、其他、阿里巴巴国际站、亚马逊、eBay、敦煌网、shopify、Wildberries\"}},{\"title\":\"出口订单地区分布\",\"sample\":{\"国家/地区\":\"哥伦比亚\",\"订单数\":\"1\",\"金额(美元)\":\"0.0\",\"净重(千克)\":\"0.3400000035762787\"}}]；代表记录=[{\"国家/地区\":\"哥伦比亚\",\"订单数\":\"1\",\"金额(美元)\":\"0.0\"},{\"国家/地区\":\"美国\",\"订单数\":\"1\",\"金额(美元)\":\"0.0\"}]；解释边界=[{\"feature\":\"出口活跃度\",\"evidence\":\"出口趋势覆盖 2 年。出口金额均为上游原值 0；金额字段覆盖口径未验证，不据此判断出口规模或价格变化；订单量峰值在“2017”（1 笔），近年持平。\",\"interpretation\":\"年度金额与订单数仅按各自字段描述；当前年度为 YTD 时不与完整年度直接同比，跨年缺口也不标作同比。\"},{\"feature\":\"核心出口品类\",\"evidence\":\"“HS 8517120000”为订单最多的品类，占比约 50%，前 3 类合计 100%（CR3）。\",\"interpretation\":\"HS 编码占比仅描述当前返回样本中订单数量的分布与集中程度，不代表产品竞争力、售价或市场份额。\"},{\"feature\":\"出口市场集中度\",\"evidence\":\"当前页样本中，“哥伦比亚”订单数最多，占比约 50%，前 3 地区合计 100%（当前页 CR3）。\",\"interpretation\":\"地区占比仅描述当前返回订单样本的分布，不能据此判断企业整体市场结构、政策风险或订单可持续性。\"},{\"feature\":\"外贸招聘记录\",\"evidence\":\"近三个月外贸相关岗位招聘 1612 人。\",\"interpretation\":\"该值只说明历史招聘数据中出现外贸相关岗位，不能单独证明出口增长、产能或新市场开拓。\"},{\"feature\":\"外贸职能结构\",\"evidence\":\"招聘职能覆盖：海外广告投放、客服、外贸员、其他、美工、精品开发、运营。其中 外贸员、美工、精品开发、运营 等岗位同时出现。\",\"interpretation\":\"岗位名称仅构成招聘职能线索；没有渠道或业务数据时，不能据此认定跨境电商团队，也不能推断 Amazon、Shopee 或独立站业务。\"},{\"feature\":\"招聘城市样本分布\",\"evidence\":\"返回的招聘城市字段涉及 26 个城市，按城市群聚类：其他 16 城（62%）、长三角 6 城（23%）、珠三角 3 城（12%）、京津冀 1 城（4%），样本数最高为“其他”。\",\"interpretation\":\"该分布仅描述当前返回样本中的城市字段，不代表企业整体人才布局、运营重心、业务类型或供应链安排。\"},{\"feature\":\"出口地区覆盖记录\",\"evidence\":\"出口订单分布 2 个国家/地区。\",\"interpretation\":\"地区数量仅说明上游产品返回的订单地区计数，不能单独评价市场多元化程度或经营稳健性。\"}]。"
+      }
+    ],
+    "issues": [],
+    "evidence_binding": {
+      "report.json": "475b88865d2556a958cf7641eb67dbce87f8713efcf5e9cf9b0bb18abf6c94f6",
+      "report.html": "db3e10dfc43d2a9a8a2dad75aba2972c2b791db2c270aa00e9c4ba7ee561b771",
+      "report.md": "2e76ffa3999c31dd76133ad45232dd4666d52bffd9a4411b84a6d4853647f210",
+      "calls.json": "85f15655767d9c00f071a55eb8b92b64b4e6a15e09709ea953da718c98c5007e",
+      "result.json": "ee1a7a80af2a690a056dd6f09f55186658ddeff920bb3c19ff43e6b79bfdc862",
+      "source_manifest_sha256": "014e0c39ccd221d4b037bfafc75dc705b73521da54c003be18fa8ca62d4dab92"
+    }
+  }
+}

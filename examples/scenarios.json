@@ -1,0 +1,140 @@
+{
+  "skill": "customs-skill",
+  "kind": "verified_positive_examples",
+  "run_id": "live-replaced-20261027",
+  "source_manifest": "../test-records/scenarios-20261027.json",
+  "scenarios": [
+    {
+      "id": "01-ev-export",
+      "title": "新能源汽车出口画像",
+      "user_request": "请分析比亚迪股份有限公司的出口趋势、产品趋势、地区分布和海外认证。",
+      "purpose": "海外市场与供应链评估",
+      "args": [
+        "--enterprise",
+        "比亚迪股份有限公司",
+        "--page-size",
+        "10"
+      ],
+      "expected_checks": [
+        "出口趋势和地区订单分别呈现",
+        "HS 产品趋势保留编码/名称口径",
+        "海外认证仅按返回记录归纳",
+        "金额与票数不混为同一指标"
+      ],
+      "limitations": [
+        "海关数据覆盖不等于企业全部海外销售",
+        "HS 分类可能聚合多种具体产品"
+      ]
+    },
+    {
+      "id": "02-battery-export",
+      "title": "动力电池出口画像",
+      "user_request": "请查看宁德时代新能源科技股份有限公司的出口产品、地区和认证线索。",
+      "purpose": "供应商国际化能力评估",
+      "args": [
+        "--enterprise",
+        "宁德时代新能源科技股份有限公司",
+        "--page-size",
+        "10"
+      ],
+      "expected_checks": [
+        "主体全称准确",
+        "产品趋势与目的地区证据可追溯",
+        "认证有效性不超出数据字段推断",
+        "外贸招聘仅作为组织能力线索"
+      ],
+      "limitations": [
+        "认证记录需回查颁发机构和有效期",
+        "出口记录不能证明最终用户或用途"
+      ]
+    },
+    {
+      "id": "03-home-appliance-export",
+      "title": "家电出口结构",
+      "user_request": "请分析海尔智家股份有限公司的出口产品结构与区域分布。",
+      "purpose": "海外渠道布局研究",
+      "args": [
+        "--enterprise",
+        "海尔智家股份有限公司",
+        "--page-size",
+        "10"
+      ],
+      "expected_checks": [
+        "出口产品/HS 趋势和地区分布分章",
+        "趋势方向由实际年份数据计算",
+        "样本记录与总体指标区分",
+        "无数据年份不插值"
+      ],
+      "limitations": [
+        "集团海外子公司贸易可能未归集",
+        "订单地区不一定是最终消费市场"
+      ]
+    },
+    {
+      "id": "05-electronics-contract-export",
+      "title": "电子制造出口能力",
+      "user_request": "请评估立讯精密工业股份有限公司的外贸活跃度、产品和地区覆盖。",
+      "purpose": "跨境供应商评估",
+      "args": [
+        "--enterprise",
+        "立讯精密工业股份有限公司",
+        "--page-size",
+        "10"
+      ],
+      "expected_checks": [
+        "趋势、产品、地区和招聘画像均按实际数据展示",
+        "活跃度判断引用可量化证据",
+        "不将招聘岗位视为实际出口额",
+        "分页限制写入报告口径"
+      ],
+      "limitations": [
+        "公开外贸招聘只是辅助信号",
+        "关联公司订单可能未纳入"
+      ]
+    },
+    {
+      "id": "06-smartphone-emerging-markets",
+      "title": "手机厂商出口地区",
+      "user_request": "请分析深圳传音控股股份有限公司的出口订单地区与产品趋势。",
+      "purpose": "新兴市场布局研究",
+      "args": [
+        "--enterprise",
+        "深圳传音控股股份有限公司",
+        "--page-size",
+        "10"
+      ],
+      "expected_checks": [
+        "地区记录字段可读",
+        "出口产品趋势与地区样本不交叉误推",
+        "总量与当前页明确区分",
+        "无国家字段时不自行补全"
+      ],
+      "limitations": [
+        "贸易中转地不一定是最终销售地",
+        "只展示上游覆盖期内数据"
+      ]
+    },
+    {
+      "id": "07-fuzzy-export-match",
+      "title": "企业简称外贸解析",
+      "user_request": "请用“美的集团”查询海关数据，并明确匹配主体。",
+      "purpose": "验证简称解析及报告稳定性",
+      "args": [
+        "--enterprise",
+        "美的集团",
+        "--page-size",
+        "8"
+      ],
+      "expected_checks": [
+        "原始简称和解析主体同时保留",
+        "解析结果需可核对",
+        "数据以最终主体为查询口径",
+        "若歧义则限制结论"
+      ],
+      "limitations": [
+        "简称可能命中集团或子公司",
+        "主体误配会造成出口画像偏差"
+      ]
+    }
+  ]
+}

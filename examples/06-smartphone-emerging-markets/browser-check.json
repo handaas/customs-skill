@@ -1,0 +1,46 @@
+{
+  "metric_overflows": [],
+  "document_title": "深圳传音控股股份有限公司 海关大数据报告",
+  "title_matches": true,
+  "charts": 3,
+  "rendered_charts": 3,
+  "zero_size_charts": 0,
+  "chart_details": [
+    {
+      "width": 984,
+      "height": 300,
+      "instance": true,
+      "renderer": true,
+      "graphics": 39
+    },
+    {
+      "width": 984,
+      "height": 300,
+      "instance": true,
+      "renderer": true,
+      "graphics": 23
+    },
+    {
+      "width": 984,
+      "height": 300,
+      "instance": true,
+      "renderer": true,
+      "graphics": 23
+    }
+  ],
+  "page_width": 1905,
+  "viewport_width": 1920,
+  "empty_headers": 0,
+  "script_errors": [],
+  "external_resources": 0,
+  "external_asset_references": 0,
+  "ok": true,
+  "report_html_sha256": "db3e10dfc43d2a9a8a2dad75aba2972c2b791db2c270aa00e9c4ba7ee561b771",
+  "report_json_sha256": "475b88865d2556a958cf7641eb67dbce87f8713efcf5e9cf9b0bb18abf6c94f6",
+  "skill": "customs-skill",
+  "id": "06-smartphone-emerging-markets",
+  "browser": "Ego Lite",
+  "space_id": 4,
+  "offline": true,
+  "checked_at": "2026-10-27T03:02:34.659Z"
+}

@@ -1,0 +1,46 @@
+{
+  "metric_overflows": [],
+  "document_title": "立讯精密工业股份有限公司 海关大数据报告",
+  "title_matches": true,
+  "charts": 3,
+  "rendered_charts": 3,
+  "zero_size_charts": 0,
+  "chart_details": [
+    {
+      "width": 984,
+      "height": 300,
+      "instance": true,
+      "renderer": true,
+      "graphics": 81
+    },
+    {
+      "width": 984,
+      "height": 300,
+      "instance": true,
+      "renderer": true,
+      "graphics": 55
+    },
+    {
+      "width": 984,
+      "height": 300,
+      "instance": true,
+      "renderer": true,
+      "graphics": 57
+    }
+  ],
+  "page_width": 1905,
+  "viewport_width": 1920,
+  "empty_headers": 0,
+  "script_errors": [],
+  "external_resources": 0,
+  "external_asset_references": 0,
+  "ok": true,
+  "report_html_sha256": "1cef08641b762b3af622ea43fd91de10f3c351bd33f38fe3fa0d56f162fda681",
+  "report_json_sha256": "c6d7bf3a83c8e3b66e90a79e0bb832c19cab55ad81de6ca37b8c7c7c0b7a2c26",
+  "skill": "customs-skill",
+  "id": "05-electronics-contract-export",
+  "browser": "Ego Lite",
+  "space_id": 4,
+  "offline": true,
+  "checked_at": "2026-10-27T03:02:33.441Z"
+}

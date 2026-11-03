@@ -1,0 +1,418 @@
+[
+  {
+    "tool": "customs_bigdata_export_trends",
+    "domain": null,
+    "arguments": {
+      "matchKeyword": "比亚迪股份有限公司",
+      "keywordType": "name"
+    },
+    "invocation_id": "1793068942812083000",
+    "elapsed_seconds": 0.861,
+    "status": "data",
+    "error_category": null,
+    "result_type": "dict",
+    "top_level_fields": [
+      "exportTrend",
+      "total"
+    ],
+    "row_count": null,
+    "reported_total": 9,
+    "numeric_evidence": [
+      {
+        "path": "exportTrend[0].amount",
+        "value": 121572.64449691772
+      },
+      {
+        "path": "exportTrend[0].count",
+        "value": 151
+      },
+      {
+        "path": "exportTrend[0].year",
+        "value": 2023
+      },
+      {
+        "path": "exportTrend[1].amount",
+        "value": 59068.28354012966
+      },
+      {
+        "path": "exportTrend[1].count",
+        "value": 198
+      },
+      {
+        "path": "exportTrend[1].year",
+        "value": 2021
+      },
+      {
+        "path": "exportTrend[2].amount",
+        "value": 397580.70088660717
+      },
+      {
+        "path": "exportTrend[2].count",
+        "value": 35
+      },
+      {
+        "path": "exportTrend[2].year",
+        "value": 2026
+      },
+      {
+        "path": "exportTrend[3].amount",
+        "value": 560486.8040390015
+      },
+      {
+        "path": "exportTrend[3].count",
+        "value": 49
+      },
+      {
+        "path": "exportTrend[3].year",
+        "value": 2019
+      },
+      {
+        "path": "exportTrend[4].amount",
+        "value": 37144.56972503662
+      },
+      {
+        "path": "exportTrend[4].count",
+        "value": 30
+      },
+      {
+        "path": "exportTrend[4].year",
+        "value": 2022
+      },
+      {
+        "path": "total",
+        "value": 9
+      }
+    ],
+    "response_sha256": "474f8f885dfada9803145d4403dc5357a7559729d45c1ea7c61de3ab4934271e"
+  },
+  {
+    "tool": "customs_bigdata_export_product_trends",
+    "domain": null,
+    "arguments": {
+      "matchKeyword": "比亚迪股份有限公司",
+      "keywordType": "name"
+    },
+    "invocation_id": "1793068942812083000",
+    "elapsed_seconds": 0.378,
+    "status": "data",
+    "error_category": null,
+    "result_type": "dict",
+    "top_level_fields": [
+      "exportGoodsOrderDistribution",
+      "exportGoodsOrderTrend"
+    ],
+    "row_count": null,
+    "reported_total": null,
+    "numeric_evidence": [
+      {
+        "path": "exportGoodsOrderDistribution[0].count",
+        "value": 14
+      },
+      {
+        "path": "exportGoodsOrderDistribution[0].orderCountOfYear[0].count",
+        "value": 7
+      },
+      {
+        "path": "exportGoodsOrderDistribution[0].orderCountOfYear[0].year",
+        "value": 2023
+      },
+      {
+        "path": "exportGoodsOrderDistribution[0].orderCountOfYear[1].count",
+        "value": 5
+      },
+      {
+        "path": "exportGoodsOrderDistribution[0].orderCountOfYear[1].year",
+        "value": 2024
+      },
+      {
+        "path": "exportGoodsOrderDistribution[0].orderCountOfYear[2].count",
+        "value": 2
+      },
+      {
+        "path": "exportGoodsOrderDistribution[0].orderCountOfYear[2].year",
+        "value": 2022
+      },
+      {
+        "path": "exportGoodsOrderDistribution[1].count",
+        "value": 14
+      },
+      {
+        "path": "exportGoodsOrderDistribution[1].orderCountOfYear[0].count",
+        "value": 14
+      },
+      {
+        "path": "exportGoodsOrderDistribution[1].orderCountOfYear[0].year",
+        "value": 2019
+      },
+      {
+        "path": "exportGoodsOrderDistribution[2].count",
+        "value": 14
+      },
+      {
+        "path": "exportGoodsOrderDistribution[2].orderCountOfYear[0].count",
+        "value": 1
+      },
+      {
+        "path": "exportGoodsOrderDistribution[2].orderCountOfYear[0].year",
+        "value": 2024
+      },
+      {
+        "path": "exportGoodsOrderDistribution[2].orderCountOfYear[1].count",
+        "value": 12
+      },
+      {
+        "path": "exportGoodsOrderDistribution[2].orderCountOfYear[1].year",
+        "value": 2023
+      },
+      {
+        "path": "exportGoodsOrderDistribution[2].orderCountOfYear[2].count",
+        "value": 1
+      },
+      {
+        "path": "exportGoodsOrderDistribution[2].orderCountOfYear[2].year",
+        "value": 2021
+      },
+      {
+        "path": "exportGoodsOrderDistribution[3].count",
+        "value": 13
+      },
+      {
+        "path": "exportGoodsOrderDistribution[3].orderCountOfYear[0].count",
+        "value": 3
+      },
+      {
+        "path": "exportGoodsOrderDistribution[3].orderCountOfYear[0].year",
+        "value": 2020
+      },
+      {
+        "path": "exportGoodsOrderDistribution[3].orderCountOfYear[1].count",
+        "value": 10
+      },
+      {
+        "path": "exportGoodsOrderDistribution[3].orderCountOfYear[1].year",
+        "value": 2021
+      },
+      {
+        "path": "exportGoodsOrderDistribution[4].count",
+        "value": 12
+      },
+      {
+        "path": "exportGoodsOrderDistribution[4].orderCountOfYear[0].count",
+        "value": 5
+      },
+      {
+        "path": "exportGoodsOrderDistribution[4].orderCountOfYear[0].year",
+        "value": 2023
+      },
+      {
+        "path": "exportGoodsOrderDistribution[4].orderCountOfYear[1].count",
+        "value": 5
+      },
+      {
+        "path": "exportGoodsOrderDistribution[4].orderCountOfYear[1].year",
+        "value": 2024
+      },
+      {
+        "path": "exportGoodsOrderDistribution[4].orderCountOfYear[2].count",
+        "value": 2
+      },
+      {
+        "path": "exportGoodsOrderDistribution[4].orderCountOfYear[2].year",
+        "value": 2022
+      },
+      {
+        "path": "exportGoodsOrderTrend[0].count",
+        "value": 0
+      },
+      {
+        "path": "exportGoodsOrderTrend[0].year",
+        "value": 2018
+      },
+      {
+        "path": "exportGoodsOrderTrend[1].count",
+        "value": 0
+      },
+      {
+        "path": "exportGoodsOrderTrend[1].year",
+        "value": 2019
+      },
+      {
+        "path": "exportGoodsOrderTrend[2].count",
+        "value": 0
+      },
+      {
+        "path": "exportGoodsOrderTrend[2].year",
+        "value": 2020
+      },
+      {
+        "path": "exportGoodsOrderTrend[3].count",
+        "value": 0
+      },
+      {
+        "path": "exportGoodsOrderTrend[3].year",
+        "value": 2021
+      },
+      {
+        "path": "exportGoodsOrderTrend[4].count",
+        "value": 2
+      },
+      {
+        "path": "exportGoodsOrderTrend[4].year",
+        "value": 2022
+      }
+    ],
+    "response_sha256": "bad19d4e2bae23f434b5bc640920dc8dcb05156b0da41858dc5ac8ddd0995f00"
+  },
+  {
+    "tool": "customs_bigdata_export_recruitment_profile",
+    "domain": null,
+    "arguments": {
+      "matchKeyword": "比亚迪股份有限公司",
+      "keywordType": "name"
+    },
+    "invocation_id": "1793068942812083000",
+    "elapsed_seconds": 0.24,
+    "status": "data",
+    "error_category": null,
+    "result_type": "dict",
+    "top_level_fields": [
+      "recruitingCityCount",
+      "recruitingCityList",
+      "recruitingCount",
+      "recruitingLatestThreeMonthCount",
+      "recruitingPlatforms",
+      "recruitingPositions",
+      "recruitingSourceCount",
+      "recruitingSourceList"
+    ],
+    "row_count": null,
+    "reported_total": null,
+    "numeric_evidence": [
+      {
+        "path": "recruitingCityCount",
+        "value": 126
+      },
+      {
+        "path": "recruitingCount",
+        "value": 72360
+      },
+      {
+        "path": "recruitingLatestThreeMonthCount",
+        "value": 10293
+      },
+      {
+        "path": "recruitingSourceCount",
+        "value": 26
+      }
+    ],
+    "response_sha256": "520b435dd654d0021a353bd0dcbe9e080abc239e5cdac0ccbe9a0d356a862456"
+  },
+  {
+    "tool": "customs_bigdata_export_order_regions",
+    "domain": null,
+    "arguments": {
+      "matchKeyword": "比亚迪股份有限公司",
+      "keywordType": "name",
+      "pageIndex": 1,
+      "pageSize": 10
+    },
+    "invocation_id": "1793068942812083000",
+    "elapsed_seconds": 0.281,
+    "status": "data",
+    "error_category": null,
+    "result_type": "dict",
+    "top_level_fields": [
+      "resultList",
+      "total"
+    ],
+    "row_count": 10,
+    "reported_total": 15,
+    "numeric_evidence": [
+      {
+        "path": "resultList[0].amount",
+        "value": 2087616.2426757812
+      },
+      {
+        "path": "resultList[0].count",
+        "value": 10
+      },
+      {
+        "path": "resultList[0].weight",
+        "value": 32209.5
+      },
+      {
+        "path": "resultList[1].amount",
+        "value": 437283.7032470703
+      },
+      {
+        "path": "resultList[1].count",
+        "value": 18
+      },
+      {
+        "path": "resultList[1].weight",
+        "value": 0.0
+      },
+      {
+        "path": "resultList[2].amount",
+        "value": 324902.2155761719
+      },
+      {
+        "path": "resultList[2].count",
+        "value": 6
+      },
+      {
+        "path": "resultList[2].weight",
+        "value": 42577.599609375
+      },
+      {
+        "path": "resultList[3].amount",
+        "value": 241473.38984036446
+      },
+      {
+        "path": "resultList[3].count",
+        "value": 101
+      },
+      {
+        "path": "resultList[3].weight",
+        "value": 46307.85009306669
+      },
+      {
+        "path": "resultList[4].amount",
+        "value": 125971.73801803589
+      },
+      {
+        "path": "resultList[4].count",
+        "value": 29
+      },
+      {
+        "path": "resultList[4].weight",
+        "value": 2318.3000274673104
+      },
+      {
+        "path": "total",
+        "value": 15
+      }
+    ],
+    "response_sha256": "82441cf17bed440f47c56989d46483b69a892917a704734a21f101f161a08f82"
+  },
+  {
+    "tool": "customs_bigdata_overseas_certifications",
+    "domain": null,
+    "arguments": {
+      "matchKeyword": "比亚迪股份有限公司",
+      "keywordType": "name"
+    },
+    "invocation_id": "1793068942812083000",
+    "elapsed_seconds": 0.223,
+    "status": "empty",
+    "error_category": null,
+    "result_type": "dict",
+    "top_level_fields": [
+      "text"
+    ],
+    "row_count": null,
+    "reported_total": null,
+    "numeric_evidence": [],
+    "response_sha256": "b2da0c4c26e517e5a1eae0af2a20ca47c52ef51906cf1c3dfa2fe10a67cc714c"
+  }
+]

@@ -1,0 +1,47 @@
+{
+  "metric_overflows": [],
+  "document_title": "比亚迪股份有限公司 海关大数据报告",
+  "title_matches": true,
+  "charts": 3,
+  "rendered_charts": 3,
+  "zero_size_charts": 0,
+  "chart_details": [
+    {
+      "width": 984,
+      "height": 300,
+      "instance": true,
+      "renderer": true,
+      "graphics": 81
+    },
+    {
+      "width": 984,
+      "height": 300,
+      "instance": true,
+      "renderer": true,
+      "graphics": 55
+    },
+    {
+      "width": 984,
+      "height": 300,
+      "instance": true,
+      "renderer": true,
+      "graphics": 55
+    }
+  ],
+  "page_width": 1905,
+  "viewport_width": 1920,
+  "empty_headers": 0,
+  "script_errors": [],
+  "external_resources": 0,
+  "external_asset_references": 0,
+  "ok": true,
+  "report_html_sha256": "06085288ba4db75b89246ae644beba364f7ac7fc828e67bc85b7d7f3b43b30e2",
+  "report_json_sha256": "d2f5c88b5f8b0836630899dd966e1314bda1c3c41eb4e8c8f3f6edb042777140",
+  "screenshot": "browser.png",
+  "skill": "customs-skill",
+  "id": "01-ev-export",
+  "browser": "Ego Lite",
+  "space_id": 4,
+  "offline": true,
+  "checked_at": "2026-10-27T03:02:27.735Z"
+}

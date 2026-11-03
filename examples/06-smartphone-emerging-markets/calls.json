@@ -1,0 +1,246 @@
+[
+  {
+    "tool": "customs_bigdata_export_trends",
+    "domain": null,
+    "arguments": {
+      "matchKeyword": "深圳传音控股股份有限公司",
+      "keywordType": "name"
+    },
+    "invocation_id": "1793068948819501000",
+    "elapsed_seconds": 1.487,
+    "status": "data",
+    "error_category": null,
+    "result_type": "dict",
+    "top_level_fields": [
+      "exportTrend",
+      "total"
+    ],
+    "row_count": null,
+    "reported_total": 2,
+    "numeric_evidence": [
+      {
+        "path": "exportTrend[0].amount",
+        "value": 0.0
+      },
+      {
+        "path": "exportTrend[0].count",
+        "value": 1
+      },
+      {
+        "path": "exportTrend[0].year",
+        "value": 2017
+      },
+      {
+        "path": "exportTrend[1].amount",
+        "value": 0.0
+      },
+      {
+        "path": "exportTrend[1].count",
+        "value": 1
+      },
+      {
+        "path": "exportTrend[1].year",
+        "value": 2018
+      },
+      {
+        "path": "total",
+        "value": 2
+      }
+    ],
+    "response_sha256": "bd14087e2bb8af69f9cbef1088a2ffab81ac6774a2a3ee3d69223b04c06559ad"
+  },
+  {
+    "tool": "customs_bigdata_export_product_trends",
+    "domain": null,
+    "arguments": {
+      "matchKeyword": "深圳传音控股股份有限公司",
+      "keywordType": "name"
+    },
+    "invocation_id": "1793068948819501000",
+    "elapsed_seconds": 1.037,
+    "status": "data",
+    "error_category": null,
+    "result_type": "dict",
+    "top_level_fields": [
+      "exportGoodsOrderDistribution",
+      "exportGoodsOrderTrend"
+    ],
+    "row_count": null,
+    "reported_total": null,
+    "numeric_evidence": [
+      {
+        "path": "exportGoodsOrderDistribution[0].count",
+        "value": 1
+      },
+      {
+        "path": "exportGoodsOrderDistribution[0].orderCountOfYear[0].count",
+        "value": 1
+      },
+      {
+        "path": "exportGoodsOrderDistribution[0].orderCountOfYear[0].year",
+        "value": 2017
+      },
+      {
+        "path": "exportGoodsOrderDistribution[1].count",
+        "value": 1
+      },
+      {
+        "path": "exportGoodsOrderDistribution[1].orderCountOfYear[0].count",
+        "value": 1
+      },
+      {
+        "path": "exportGoodsOrderDistribution[1].orderCountOfYear[0].year",
+        "value": 2018
+      },
+      {
+        "path": "exportGoodsOrderTrend[0].count",
+        "value": 1
+      },
+      {
+        "path": "exportGoodsOrderTrend[0].year",
+        "value": 2017
+      },
+      {
+        "path": "exportGoodsOrderTrend[1].count",
+        "value": 0
+      },
+      {
+        "path": "exportGoodsOrderTrend[1].year",
+        "value": 2018
+      },
+      {
+        "path": "exportGoodsOrderTrend[2].count",
+        "value": 0
+      },
+      {
+        "path": "exportGoodsOrderTrend[2].year",
+        "value": 2017
+      },
+      {
+        "path": "exportGoodsOrderTrend[3].count",
+        "value": 1
+      },
+      {
+        "path": "exportGoodsOrderTrend[3].year",
+        "value": 2018
+      }
+    ],
+    "response_sha256": "95b0e2716ac522c739e12c155cfe6b3d03d94000fcea1e6df7d8d8ceebca0cd2"
+  },
+  {
+    "tool": "customs_bigdata_export_recruitment_profile",
+    "domain": null,
+    "arguments": {
+      "matchKeyword": "深圳传音控股股份有限公司",
+      "keywordType": "name"
+    },
+    "invocation_id": "1793068948819501000",
+    "elapsed_seconds": 0.555,
+    "status": "data",
+    "error_category": null,
+    "result_type": "dict",
+    "top_level_fields": [
+      "recruitingCityCount",
+      "recruitingCityList",
+      "recruitingCount",
+      "recruitingLatestThreeMonthCount",
+      "recruitingPlatforms",
+      "recruitingPositions",
+      "recruitingSourceCount",
+      "recruitingSourceList"
+    ],
+    "row_count": null,
+    "reported_total": null,
+    "numeric_evidence": [
+      {
+        "path": "recruitingCityCount",
+        "value": 26
+      },
+      {
+        "path": "recruitingCount",
+        "value": 21956
+      },
+      {
+        "path": "recruitingLatestThreeMonthCount",
+        "value": 1612
+      },
+      {
+        "path": "recruitingSourceCount",
+        "value": 16
+      }
+    ],
+    "response_sha256": "e7803d0936202de754471e79678ce54bcbe5708f43e8b3cea4b1ace94859dde8"
+  },
+  {
+    "tool": "customs_bigdata_export_order_regions",
+    "domain": null,
+    "arguments": {
+      "matchKeyword": "深圳传音控股股份有限公司",
+      "keywordType": "name",
+      "pageIndex": 1,
+      "pageSize": 10
+    },
+    "invocation_id": "1793068948819501000",
+    "elapsed_seconds": 0.974,
+    "status": "data",
+    "error_category": null,
+    "result_type": "dict",
+    "top_level_fields": [
+      "resultList",
+      "total"
+    ],
+    "row_count": 2,
+    "reported_total": 2,
+    "numeric_evidence": [
+      {
+        "path": "resultList[0].amount",
+        "value": 0.0
+      },
+      {
+        "path": "resultList[0].count",
+        "value": 1
+      },
+      {
+        "path": "resultList[0].weight",
+        "value": 0.3400000035762787
+      },
+      {
+        "path": "resultList[1].amount",
+        "value": 0.0
+      },
+      {
+        "path": "resultList[1].count",
+        "value": 1
+      },
+      {
+        "path": "resultList[1].weight",
+        "value": 500.0
+      },
+      {
+        "path": "total",
+        "value": 2
+      }
+    ],
+    "response_sha256": "521c449f39d84eba26634fd3db130bb41a5eaba543145f5caa65daeb7fac9437"
+  },
+  {
+    "tool": "customs_bigdata_overseas_certifications",
+    "domain": null,
+    "arguments": {
+      "matchKeyword": "深圳传音控股股份有限公司",
+      "keywordType": "name"
+    },
+    "invocation_id": "1793068948819501000",
+    "elapsed_seconds": 0.986,
+    "status": "empty",
+    "error_category": null,
+    "result_type": "dict",
+    "top_level_fields": [
+      "text"
+    ],
+    "row_count": null,
+    "reported_total": null,
+    "numeric_evidence": [],
+    "response_sha256": "b2da0c4c26e517e5a1eae0af2a20ca47c52ef51906cf1c3dfa2fe10a67cc714c"
+  }
+]

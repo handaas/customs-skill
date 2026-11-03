@@ -1,0 +1,522 @@
+[
+  {
+    "tool": "customs_bigdata_export_trends",
+    "domain": null,
+    "arguments": {
+      "matchKeyword": "立讯精密工业股份有限公司",
+      "keywordType": "name"
+    },
+    "invocation_id": "1793068948718232000",
+    "elapsed_seconds": 1.959,
+    "status": "data",
+    "error_category": null,
+    "result_type": "dict",
+    "top_level_fields": [
+      "exportTrend",
+      "total"
+    ],
+    "row_count": null,
+    "reported_total": 9,
+    "numeric_evidence": [
+      {
+        "path": "exportTrend[0].amount",
+        "value": 3837957972.2159085
+      },
+      {
+        "path": "exportTrend[0].count",
+        "value": 296705
+      },
+      {
+        "path": "exportTrend[0].year",
+        "value": 2024
+      },
+      {
+        "path": "exportTrend[1].amount",
+        "value": 4940004284.378999
+      },
+      {
+        "path": "exportTrend[1].count",
+        "value": 430722
+      },
+      {
+        "path": "exportTrend[1].year",
+        "value": 2025
+      },
+      {
+        "path": "exportTrend[2].amount",
+        "value": 1961647887.432987
+      },
+      {
+        "path": "exportTrend[2].count",
+        "value": 117903
+      },
+      {
+        "path": "exportTrend[2].year",
+        "value": 2020
+      },
+      {
+        "path": "exportTrend[3].amount",
+        "value": 3421464752.8425083
+      },
+      {
+        "path": "exportTrend[3].count",
+        "value": 173554
+      },
+      {
+        "path": "exportTrend[3].year",
+        "value": 2021
+      },
+      {
+        "path": "exportTrend[4].amount",
+        "value": 3058136.5988311768
+      },
+      {
+        "path": "exportTrend[4].count",
+        "value": 107
+      },
+      {
+        "path": "exportTrend[4].year",
+        "value": 2018
+      },
+      {
+        "path": "total",
+        "value": 9
+      }
+    ],
+    "response_sha256": "4ec1deeb4fdd3f982dd0409cda4d1cc7a81363a84bc85fa6f38abf309e5c036a"
+  },
+  {
+    "tool": "customs_bigdata_export_product_trends",
+    "domain": null,
+    "arguments": {
+      "matchKeyword": "立讯精密工业股份有限公司",
+      "keywordType": "name"
+    },
+    "invocation_id": "1793068948718232000",
+    "elapsed_seconds": 0.997,
+    "status": "data",
+    "error_category": null,
+    "result_type": "dict",
+    "top_level_fields": [
+      "exportGoodsOrderDistribution",
+      "exportGoodsOrderTrend"
+    ],
+    "row_count": null,
+    "reported_total": null,
+    "numeric_evidence": [
+      {
+        "path": "exportGoodsOrderDistribution[0].count",
+        "value": 180989
+      },
+      {
+        "path": "exportGoodsOrderDistribution[0].orderCountOfYear[0].count",
+        "value": 10091
+      },
+      {
+        "path": "exportGoodsOrderDistribution[0].orderCountOfYear[0].year",
+        "value": 2022
+      },
+      {
+        "path": "exportGoodsOrderDistribution[0].orderCountOfYear[1].count",
+        "value": 26955
+      },
+      {
+        "path": "exportGoodsOrderDistribution[0].orderCountOfYear[1].year",
+        "value": 2026
+      },
+      {
+        "path": "exportGoodsOrderDistribution[0].orderCountOfYear[2].count",
+        "value": 34990
+      },
+      {
+        "path": "exportGoodsOrderDistribution[0].orderCountOfYear[2].year",
+        "value": 2025
+      },
+      {
+        "path": "exportGoodsOrderDistribution[0].orderCountOfYear[3].count",
+        "value": 21306
+      },
+      {
+        "path": "exportGoodsOrderDistribution[0].orderCountOfYear[3].year",
+        "value": 2020
+      },
+      {
+        "path": "exportGoodsOrderDistribution[0].orderCountOfYear[4].count",
+        "value": 11
+      },
+      {
+        "path": "exportGoodsOrderDistribution[0].orderCountOfYear[4].year",
+        "value": 2018
+      },
+      {
+        "path": "exportGoodsOrderDistribution[1].count",
+        "value": 151233
+      },
+      {
+        "path": "exportGoodsOrderDistribution[1].orderCountOfYear[0].count",
+        "value": 17140
+      },
+      {
+        "path": "exportGoodsOrderDistribution[1].orderCountOfYear[0].year",
+        "value": 2023
+      },
+      {
+        "path": "exportGoodsOrderDistribution[1].orderCountOfYear[1].count",
+        "value": 12
+      },
+      {
+        "path": "exportGoodsOrderDistribution[1].orderCountOfYear[1].year",
+        "value": 2019
+      },
+      {
+        "path": "exportGoodsOrderDistribution[1].orderCountOfYear[2].count",
+        "value": 7533
+      },
+      {
+        "path": "exportGoodsOrderDistribution[1].orderCountOfYear[2].year",
+        "value": 2020
+      },
+      {
+        "path": "exportGoodsOrderDistribution[1].orderCountOfYear[3].count",
+        "value": 6430
+      },
+      {
+        "path": "exportGoodsOrderDistribution[1].orderCountOfYear[3].year",
+        "value": 2022
+      },
+      {
+        "path": "exportGoodsOrderDistribution[1].orderCountOfYear[4].count",
+        "value": 42182
+      },
+      {
+        "path": "exportGoodsOrderDistribution[1].orderCountOfYear[4].year",
+        "value": 2025
+      },
+      {
+        "path": "exportGoodsOrderDistribution[2].count",
+        "value": 128468
+      },
+      {
+        "path": "exportGoodsOrderDistribution[2].orderCountOfYear[0].count",
+        "value": 17869
+      },
+      {
+        "path": "exportGoodsOrderDistribution[2].orderCountOfYear[0].year",
+        "value": 2023
+      },
+      {
+        "path": "exportGoodsOrderDistribution[2].orderCountOfYear[1].count",
+        "value": 6592
+      },
+      {
+        "path": "exportGoodsOrderDistribution[2].orderCountOfYear[1].year",
+        "value": 2022
+      },
+      {
+        "path": "exportGoodsOrderDistribution[2].orderCountOfYear[2].count",
+        "value": 502
+      },
+      {
+        "path": "exportGoodsOrderDistribution[2].orderCountOfYear[2].year",
+        "value": 2019
+      },
+      {
+        "path": "exportGoodsOrderDistribution[2].orderCountOfYear[3].count",
+        "value": 17649
+      },
+      {
+        "path": "exportGoodsOrderDistribution[2].orderCountOfYear[3].year",
+        "value": 2021
+      },
+      {
+        "path": "exportGoodsOrderDistribution[2].orderCountOfYear[4].count",
+        "value": 28498
+      },
+      {
+        "path": "exportGoodsOrderDistribution[2].orderCountOfYear[4].year",
+        "value": 2025
+      },
+      {
+        "path": "exportGoodsOrderDistribution[3].count",
+        "value": 87733
+      },
+      {
+        "path": "exportGoodsOrderDistribution[3].orderCountOfYear[0].count",
+        "value": 20761
+      },
+      {
+        "path": "exportGoodsOrderDistribution[3].orderCountOfYear[0].year",
+        "value": 2024
+      },
+      {
+        "path": "exportGoodsOrderDistribution[3].orderCountOfYear[1].count",
+        "value": 18209
+      },
+      {
+        "path": "exportGoodsOrderDistribution[3].orderCountOfYear[1].year",
+        "value": 2026
+      },
+      {
+        "path": "exportGoodsOrderDistribution[3].orderCountOfYear[2].count",
+        "value": 10196
+      },
+      {
+        "path": "exportGoodsOrderDistribution[3].orderCountOfYear[2].year",
+        "value": 2023
+      },
+      {
+        "path": "exportGoodsOrderDistribution[3].orderCountOfYear[3].count",
+        "value": 6687
+      },
+      {
+        "path": "exportGoodsOrderDistribution[3].orderCountOfYear[3].year",
+        "value": 2020
+      },
+      {
+        "path": "exportGoodsOrderDistribution[3].orderCountOfYear[4].count",
+        "value": 2661
+      },
+      {
+        "path": "exportGoodsOrderDistribution[3].orderCountOfYear[4].year",
+        "value": 2022
+      },
+      {
+        "path": "exportGoodsOrderDistribution[4].count",
+        "value": 87305
+      },
+      {
+        "path": "exportGoodsOrderDistribution[4].orderCountOfYear[0].count",
+        "value": 15070
+      },
+      {
+        "path": "exportGoodsOrderDistribution[4].orderCountOfYear[0].year",
+        "value": 2024
+      },
+      {
+        "path": "exportGoodsOrderDistribution[4].orderCountOfYear[1].count",
+        "value": 6042
+      },
+      {
+        "path": "exportGoodsOrderDistribution[4].orderCountOfYear[1].year",
+        "value": 2021
+      },
+      {
+        "path": "exportGoodsOrderDistribution[4].orderCountOfYear[2].count",
+        "value": 9303
+      },
+      {
+        "path": "exportGoodsOrderDistribution[4].orderCountOfYear[2].year",
+        "value": 2023
+      },
+      {
+        "path": "exportGoodsOrderDistribution[4].orderCountOfYear[3].count",
+        "value": 2268
+      },
+      {
+        "path": "exportGoodsOrderDistribution[4].orderCountOfYear[3].year",
+        "value": 2020
+      },
+      {
+        "path": "exportGoodsOrderDistribution[4].orderCountOfYear[4].count",
+        "value": 24946
+      },
+      {
+        "path": "exportGoodsOrderDistribution[4].orderCountOfYear[4].year",
+        "value": 2026
+      },
+      {
+        "path": "exportGoodsOrderTrend[0].count",
+        "value": 11
+      },
+      {
+        "path": "exportGoodsOrderTrend[0].year",
+        "value": 2018
+      },
+      {
+        "path": "exportGoodsOrderTrend[1].count",
+        "value": 4612
+      },
+      {
+        "path": "exportGoodsOrderTrend[1].year",
+        "value": 2019
+      },
+      {
+        "path": "exportGoodsOrderTrend[2].count",
+        "value": 21306
+      },
+      {
+        "path": "exportGoodsOrderTrend[2].year",
+        "value": 2020
+      },
+      {
+        "path": "exportGoodsOrderTrend[3].count",
+        "value": 23187
+      },
+      {
+        "path": "exportGoodsOrderTrend[3].year",
+        "value": 2021
+      },
+      {
+        "path": "exportGoodsOrderTrend[4].count",
+        "value": 10091
+      },
+      {
+        "path": "exportGoodsOrderTrend[4].year",
+        "value": 2022
+      }
+    ],
+    "response_sha256": "1f052062300c6d7b4b341565897ca2be05cdf50a597570c4b3414f91db4af162"
+  },
+  {
+    "tool": "customs_bigdata_export_recruitment_profile",
+    "domain": null,
+    "arguments": {
+      "matchKeyword": "立讯精密工业股份有限公司",
+      "keywordType": "name"
+    },
+    "invocation_id": "1793068948718232000",
+    "elapsed_seconds": 1.034,
+    "status": "data",
+    "error_category": null,
+    "result_type": "dict",
+    "top_level_fields": [
+      "recruitingCityCount",
+      "recruitingCityList",
+      "recruitingCount",
+      "recruitingLatestThreeMonthCount",
+      "recruitingPlatforms",
+      "recruitingPositions",
+      "recruitingSourceCount",
+      "recruitingSourceList"
+    ],
+    "row_count": null,
+    "reported_total": null,
+    "numeric_evidence": [
+      {
+        "path": "recruitingCityCount",
+        "value": 278
+      },
+      {
+        "path": "recruitingCount",
+        "value": 13147
+      },
+      {
+        "path": "recruitingLatestThreeMonthCount",
+        "value": 1049
+      },
+      {
+        "path": "recruitingSourceCount",
+        "value": 21
+      }
+    ],
+    "response_sha256": "a2d9cc3b6ec28dfbb044601b1770232b474191d13273d8dc297cd9ae2e8c39f9"
+  },
+  {
+    "tool": "customs_bigdata_export_order_regions",
+    "domain": null,
+    "arguments": {
+      "matchKeyword": "立讯精密工业股份有限公司",
+      "keywordType": "name",
+      "pageIndex": 1,
+      "pageSize": 10
+    },
+    "invocation_id": "1793068948718232000",
+    "elapsed_seconds": 0.406,
+    "status": "data",
+    "error_category": null,
+    "result_type": "dict",
+    "top_level_fields": [
+      "resultList",
+      "total"
+    ],
+    "row_count": 10,
+    "reported_total": 14,
+    "numeric_evidence": [
+      {
+        "path": "resultList[0].amount",
+        "value": 23713322283.482002
+      },
+      {
+        "path": "resultList[0].count",
+        "value": 1669937
+      },
+      {
+        "path": "resultList[0].weight",
+        "value": 1544866678.7202356
+      },
+      {
+        "path": "resultList[1].amount",
+        "value": 78077020.10716403
+      },
+      {
+        "path": "resultList[1].count",
+        "value": 4805
+      },
+      {
+        "path": "resultList[1].weight",
+        "value": 23305309.142639168
+      },
+      {
+        "path": "resultList[2].amount",
+        "value": 36385151.48180699
+      },
+      {
+        "path": "resultList[2].count",
+        "value": 4320
+      },
+      {
+        "path": "resultList[2].weight",
+        "value": 0.0
+      },
+      {
+        "path": "resultList[3].amount",
+        "value": 18010216.28515625
+      },
+      {
+        "path": "resultList[3].count",
+        "value": 243
+      },
+      {
+        "path": "resultList[3].weight",
+        "value": 1084073.3224992752
+      },
+      {
+        "path": "resultList[4].amount",
+        "value": 9297765.67862469
+      },
+      {
+        "path": "resultList[4].count",
+        "value": 457
+      },
+      {
+        "path": "resultList[4].weight",
+        "value": 642288.5294365883
+      },
+      {
+        "path": "total",
+        "value": 14
+      }
+    ],
+    "response_sha256": "4dc501c186ddfa1ab9ccbadf467fc50178cda5cdd6405109ed87eb0257ddc63b"
+  },
+  {
+    "tool": "customs_bigdata_overseas_certifications",
+    "domain": null,
+    "arguments": {
+      "matchKeyword": "立讯精密工业股份有限公司",
+      "keywordType": "name"
+    },
+    "invocation_id": "1793068948718232000",
+    "elapsed_seconds": 0.767,
+    "status": "empty",
+    "error_category": null,
+    "result_type": "dict",
+    "top_level_fields": [
+      "text"
+    ],
+    "row_count": null,
+    "reported_total": null,
+    "numeric_evidence": [],
+    "response_sha256": "b2da0c4c26e517e5a1eae0af2a20ca47c52ef51906cf1c3dfa2fe10a67cc714c"
+  }
+]

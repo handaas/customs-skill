@@ -1,0 +1,113 @@
+{
+  "run_id": "live-replaced-20261027",
+  "cases": [
+    {
+      "skill": "customs-skill",
+      "id": "01-ev-export",
+      "status": "passed",
+      "positive_business_pass": true,
+      "files_sha256": {
+        "report.json": "d2f5c88b5f8b0836630899dd966e1314bda1c3c41eb4e8c8f3f6edb042777140",
+        "report.html": "06085288ba4db75b89246ae644beba364f7ac7fc828e67bc85b7d7f3b43b30e2",
+        "report.md": "5d6bdebd62bd85d4cc9931156ad945e19a1d273c613ac47b7f2934f744432526",
+        "calls.json": "b099b83803d243d88eb3d5195f607f126318479560da661f2afc5076af88ab8a",
+        "result.json": "08f3ac8dd038a48764b154e23500a4f86812b6a73ae34f5ee5e597d814f42843",
+        "audit.json": "73fc7d00f919a6ac417b6dbcd9916068a1c25c6ea1b82220eb0cb5c118bf3e4e",
+        "acceptance.json": "0f54d2f35af0d3a4546748b069f2ecf23935e102750ccc5f511922d38ecdbdce",
+        "business-review.json": "eb18890fa2b6f543389dba7a5d4c55c4ec587cc6e016cd893bfae466ea80149e",
+        "browser-check.json": "e41bf3892b17ad3f9c98973df70f2f2588d68abaad434a4d047abb293982b502"
+      },
+      "audit_record": "../../test-records/live-replaced-20261027/01-ev-export.md"
+    },
+    {
+      "skill": "customs-skill",
+      "id": "02-battery-export",
+      "status": "passed",
+      "positive_business_pass": true,
+      "files_sha256": {
+        "report.json": "ac1c089f0c92ec2e56959a74ad0cc9f654af05845f637db296485e7cb535bd18",
+        "report.html": "1adb8df7ab2cfd748ba7ee3fa18b42724b3eee7f8ca45d2debe35286a2b21884",
+        "report.md": "751bc9bf27f54489ca60362d534c98188264b3a731e1cce538eeeba4d0c0480e",
+        "calls.json": "99ee78b56d859a06df2b7457e91adf3bd7e3743677624a8f41c60633e3136a7f",
+        "result.json": "8d2c06a451842d1e29c5352a68589b77727dedb353822690581ae191e51c79db",
+        "audit.json": "c6199145bf368adf54b780f30a3508f3879e1bac5e0e124eeef06e2719bed4fe",
+        "acceptance.json": "1abfc0836950cc5e26e4797c90a8f135079828ea8eb293c6f788165d5d85f6dc",
+        "business-review.json": "48daf634945c84ef7de171fcc836d018d25edb5e21613257788dd61981e7a726",
+        "browser-check.json": "29bc5a698b451fdc18ca2ea7b784d0122248359f8f0c9e180721be1a87c87234"
+      },
+      "audit_record": "../../test-records/live-replaced-20261027/02-battery-export.md"
+    },
+    {
+      "skill": "customs-skill",
+      "id": "03-home-appliance-export",
+      "status": "passed",
+      "positive_business_pass": true,
+      "files_sha256": {
+        "report.json": "9ac311203493c4d4ac899a5b713faacf9e261a0364e6027ea782f166c99d4323",
+        "report.html": "f2792f3b560fbd5f644a6671ab75ee0f84b9fcc8c6fe5d61129b41bbc5df03ac",
+        "report.md": "e9016bccdc9a00b2928c6a1509c0e1300f8c478055545b7b6687373d20fe367b",
+        "calls.json": "2e9be3cd67879f07fb115e2b66640f3af3267f07567e8a36b797be6591e16c86",
+        "result.json": "56fca78bb3377bf42a9ee362def3fed4f248784220ea568a826174f64be73c26",
+        "audit.json": "1121f2aac63ab77651d70844388d632499cb8af48620f85858ec381a967ecc25",
+        "acceptance.json": "166bbb9c51450c19d09813bd7b1d5ce64d7b3d8c352fbffddf6c1ffaee04cda3",
+        "business-review.json": "225460d67379f88e1a7865b62103d303f9decd6b54c8d90633025002c7a44c6f",
+        "browser-check.json": "f58148102f4536f86a6cfbb70d79f76ec69ff408fd3e051fc2b23006c86053d6"
+      },
+      "audit_record": "../../test-records/live-replaced-20261027/03-home-appliance-export.md"
+    },
+    {
+      "skill": "customs-skill",
+      "id": "05-electronics-contract-export",
+      "status": "passed",
+      "positive_business_pass": true,
+      "files_sha256": {
+        "report.json": "c6d7bf3a83c8e3b66e90a79e0bb832c19cab55ad81de6ca37b8c7c7c0b7a2c26",
+        "report.html": "1cef08641b762b3af622ea43fd91de10f3c351bd33f38fe3fa0d56f162fda681",
+        "report.md": "7a04a3eb0f171385606b3c7c0989a18237c4ce50f68d2c77075d8405c2af0a3f",
+        "calls.json": "f3bff0554df4a90169fa4be663fbe63a3677169babfc6f091bc714d075e1b5cc",
+        "result.json": "26fbdda73566c5e2bec3cd92dd2a23f55e2431e67da4afb60e5e33d90a8c8af4",
+        "audit.json": "b84be6e6bb3a6c2e7adcf6fd30825444feca05e0029442e503eb39e473cb3caa",
+        "acceptance.json": "5ffa05ed975fa9d5e9754fd1c42486b976aa52428a2d4dbb717eb0870c19ec03",
+        "business-review.json": "d4c3ae32ff9072b66c7ab980abe06dce0fdcc3bda4632fb881190145c179de5b",
+        "browser-check.json": "0a0a22f6b75b3941064d84a0314a13d9d42e6442a582318b45cde1b37e8ecde9"
+      },
+      "audit_record": "../../test-records/live-replaced-20261027/05-electronics-contract-export.md"
+    },
+    {
+      "skill": "customs-skill",
+      "id": "06-smartphone-emerging-markets",
+      "status": "passed",
+      "positive_business_pass": true,
+      "files_sha256": {
+        "report.json": "475b88865d2556a958cf7641eb67dbce87f8713efcf5e9cf9b0bb18abf6c94f6",
+        "report.html": "db3e10dfc43d2a9a8a2dad75aba2972c2b791db2c270aa00e9c4ba7ee561b771",
+        "report.md": "2e76ffa3999c31dd76133ad45232dd4666d52bffd9a4411b84a6d4853647f210",
+        "calls.json": "85f15655767d9c00f071a55eb8b92b64b4e6a15e09709ea953da718c98c5007e",
+        "result.json": "ee1a7a80af2a690a056dd6f09f55186658ddeff920bb3c19ff43e6b79bfdc862",
+        "audit.json": "0c7f14d784868528a025d9b032e231397d5b0070764590f9f1ddda4febe1dcb2",
+        "acceptance.json": "764d504cf813f60d58362281a96d10a11deb2082f60f83436d13d01b5d9731c3",
+        "business-review.json": "d8661af9b4aafd699a062724859b20d57598769752c97ef2e4f1eab313ea24f2",
+        "browser-check.json": "6f18a55bf887db00523f2ddc5163aea1f9789f8441ed083ac5c22d92ed58391d"
+      },
+      "audit_record": "../../test-records/live-replaced-20261027/06-smartphone-emerging-markets.md"
+    },
+    {
+      "skill": "customs-skill",
+      "id": "07-fuzzy-export-match",
+      "status": "passed",
+      "positive_business_pass": true,
+      "files_sha256": {
+        "report.json": "72a6e5a54b49b9cbd07042e22fd56995b096277ec3c1e56842cb73888e113a60",
+        "report.html": "126e0f3b93a900e4a827803104933a8fd2c5c3aaaadce76e1db4bd741e3d0876",
+        "report.md": "3bfc9b15c6804129885bfebb25f8b37eb1d0b9b72665d23c3f75d249a4a34c22",
+        "calls.json": "f2d8a3686de7ee51a9d89fd5c4e58a2b80921ca7552092468f2b94636ed41fa5",
+        "result.json": "15d89b25cd7c3bae5554fafdfe2eff6527a9c69325f92a6764c0cb1aa14fe38f",
+        "audit.json": "cbc51d68d1db6c5f9bae6cb73181afbf12ebbddd5db5f4b795b1b1eccac3c141",
+        "acceptance.json": "a519c452e23eb2e736816adc04d7ad69d938d3233cf2a31d37bd1e98b05ce549",
+        "business-review.json": "9f84c458843e78b028178339837074ea5b1727ce02c570f5d64c7a319a4e7bc9",
+        "browser-check.json": "841534f230ea120d7a76a8b7a0bbe7315d068aeb218738f9945465f3cdac7999"
+      },
+      "audit_record": "../../test-records/live-replaced-20261027/07-fuzzy-export-match.md"
+    }
+  ]
+}

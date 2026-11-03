@@ -1,0 +1,502 @@
+[
+  {
+    "tool": "customs_bigdata_export_trends",
+    "domain": null,
+    "arguments": {
+      "matchKeyword": "宁德时代新能源科技股份有限公司",
+      "keywordType": "name"
+    },
+    "invocation_id": "1793068945122722000",
+    "elapsed_seconds": 1.044,
+    "status": "data",
+    "error_category": null,
+    "result_type": "dict",
+    "top_level_fields": [
+      "exportTrend",
+      "total"
+    ],
+    "row_count": null,
+    "reported_total": 10,
+    "numeric_evidence": [
+      {
+        "path": "exportTrend[0].amount",
+        "value": 1119.0
+      },
+      {
+        "path": "exportTrend[0].count",
+        "value": 4
+      },
+      {
+        "path": "exportTrend[1].amount",
+        "value": 655657448.9107454
+      },
+      {
+        "path": "exportTrend[1].count",
+        "value": 2153
+      },
+      {
+        "path": "exportTrend[2].amount",
+        "value": 0.0
+      },
+      {
+        "path": "exportTrend[2].count",
+        "value": 1
+      },
+      {
+        "path": "exportTrend[3].amount",
+        "value": 731982722.5857935
+      },
+      {
+        "path": "exportTrend[3].count",
+        "value": 6211
+      },
+      {
+        "path": "exportTrend[4].amount",
+        "value": 9208148.839935303
+      },
+      {
+        "path": "exportTrend[4].count",
+        "value": 25
+      },
+      {
+        "path": "total",
+        "value": 10
+      }
+    ],
+    "response_sha256": "d5da723d11a673e2212d25e7fa7bd6ff1b39cf84b4d4a6d4bbf777954f761d6c"
+  },
+  {
+    "tool": "customs_bigdata_export_product_trends",
+    "domain": null,
+    "arguments": {
+      "matchKeyword": "宁德时代新能源科技股份有限公司",
+      "keywordType": "name"
+    },
+    "invocation_id": "1793068945122722000",
+    "elapsed_seconds": 0.326,
+    "status": "data",
+    "error_category": null,
+    "result_type": "dict",
+    "top_level_fields": [
+      "exportGoodsOrderDistribution",
+      "exportGoodsOrderTrend"
+    ],
+    "row_count": null,
+    "reported_total": null,
+    "numeric_evidence": [
+      {
+        "path": "exportGoodsOrderDistribution[0].count",
+        "value": 7343
+      },
+      {
+        "path": "exportGoodsOrderDistribution[0].orderCountOfYear[0].count",
+        "value": 2785
+      },
+      {
+        "path": "exportGoodsOrderDistribution[0].orderCountOfYear[0].year",
+        "value": 2024
+      },
+      {
+        "path": "exportGoodsOrderDistribution[0].orderCountOfYear[1].count",
+        "value": 318
+      },
+      {
+        "path": "exportGoodsOrderDistribution[0].orderCountOfYear[1].year",
+        "value": 2026
+      },
+      {
+        "path": "exportGoodsOrderDistribution[0].orderCountOfYear[2].count",
+        "value": 72
+      },
+      {
+        "path": "exportGoodsOrderDistribution[0].orderCountOfYear[2].year",
+        "value": 2020
+      },
+      {
+        "path": "exportGoodsOrderDistribution[0].orderCountOfYear[3].count",
+        "value": 625
+      },
+      {
+        "path": "exportGoodsOrderDistribution[0].orderCountOfYear[3].year",
+        "value": 2022
+      },
+      {
+        "path": "exportGoodsOrderDistribution[0].orderCountOfYear[4].count",
+        "value": 2660
+      },
+      {
+        "path": "exportGoodsOrderDistribution[0].orderCountOfYear[4].year",
+        "value": 2023
+      },
+      {
+        "path": "exportGoodsOrderDistribution[1].count",
+        "value": 2291
+      },
+      {
+        "path": "exportGoodsOrderDistribution[1].orderCountOfYear[0].count",
+        "value": 981
+      },
+      {
+        "path": "exportGoodsOrderDistribution[1].orderCountOfYear[0].year",
+        "value": 2022
+      },
+      {
+        "path": "exportGoodsOrderDistribution[1].orderCountOfYear[1].count",
+        "value": 505
+      },
+      {
+        "path": "exportGoodsOrderDistribution[1].orderCountOfYear[1].year",
+        "value": 2023
+      },
+      {
+        "path": "exportGoodsOrderDistribution[1].orderCountOfYear[2].count",
+        "value": 352
+      },
+      {
+        "path": "exportGoodsOrderDistribution[1].orderCountOfYear[2].year",
+        "value": 2024
+      },
+      {
+        "path": "exportGoodsOrderDistribution[1].orderCountOfYear[3].count",
+        "value": 62
+      },
+      {
+        "path": "exportGoodsOrderDistribution[1].orderCountOfYear[3].year",
+        "value": 2021
+      },
+      {
+        "path": "exportGoodsOrderDistribution[1].orderCountOfYear[4].count",
+        "value": 121
+      },
+      {
+        "path": "exportGoodsOrderDistribution[1].orderCountOfYear[4].year",
+        "value": 2020
+      },
+      {
+        "path": "exportGoodsOrderDistribution[2].count",
+        "value": 2269
+      },
+      {
+        "path": "exportGoodsOrderDistribution[2].orderCountOfYear[0].count",
+        "value": 855
+      },
+      {
+        "path": "exportGoodsOrderDistribution[2].orderCountOfYear[0].year",
+        "value": 2023
+      },
+      {
+        "path": "exportGoodsOrderDistribution[2].orderCountOfYear[1].count",
+        "value": 786
+      },
+      {
+        "path": "exportGoodsOrderDistribution[2].orderCountOfYear[1].year",
+        "value": 2024
+      },
+      {
+        "path": "exportGoodsOrderDistribution[2].orderCountOfYear[2].count",
+        "value": 329
+      },
+      {
+        "path": "exportGoodsOrderDistribution[2].orderCountOfYear[2].year",
+        "value": 2025
+      },
+      {
+        "path": "exportGoodsOrderDistribution[2].orderCountOfYear[3].count",
+        "value": 28
+      },
+      {
+        "path": "exportGoodsOrderDistribution[2].orderCountOfYear[3].year",
+        "value": 2022
+      },
+      {
+        "path": "exportGoodsOrderDistribution[2].orderCountOfYear[4].count",
+        "value": 35
+      },
+      {
+        "path": "exportGoodsOrderDistribution[2].orderCountOfYear[4].year",
+        "value": 2021
+      },
+      {
+        "path": "exportGoodsOrderDistribution[3].count",
+        "value": 260
+      },
+      {
+        "path": "exportGoodsOrderDistribution[3].orderCountOfYear[0].count",
+        "value": 10
+      },
+      {
+        "path": "exportGoodsOrderDistribution[3].orderCountOfYear[0].year",
+        "value": 2022
+      },
+      {
+        "path": "exportGoodsOrderDistribution[3].orderCountOfYear[1].count",
+        "value": 5
+      },
+      {
+        "path": "exportGoodsOrderDistribution[3].orderCountOfYear[1].year",
+        "value": 2020
+      },
+      {
+        "path": "exportGoodsOrderDistribution[3].orderCountOfYear[2].count",
+        "value": 49
+      },
+      {
+        "path": "exportGoodsOrderDistribution[3].orderCountOfYear[2].year",
+        "value": 2023
+      },
+      {
+        "path": "exportGoodsOrderDistribution[3].orderCountOfYear[3].count",
+        "value": 113
+      },
+      {
+        "path": "exportGoodsOrderDistribution[3].orderCountOfYear[3].year",
+        "value": 2025
+      },
+      {
+        "path": "exportGoodsOrderDistribution[3].orderCountOfYear[4].count",
+        "value": 36
+      },
+      {
+        "path": "exportGoodsOrderDistribution[3].orderCountOfYear[4].year",
+        "value": 2026
+      },
+      {
+        "path": "exportGoodsOrderDistribution[4].count",
+        "value": 223
+      },
+      {
+        "path": "exportGoodsOrderDistribution[4].orderCountOfYear[0].count",
+        "value": 1
+      },
+      {
+        "path": "exportGoodsOrderDistribution[4].orderCountOfYear[0].year",
+        "value": 2022
+      },
+      {
+        "path": "exportGoodsOrderDistribution[4].orderCountOfYear[1].count",
+        "value": 1
+      },
+      {
+        "path": "exportGoodsOrderDistribution[4].orderCountOfYear[1].year",
+        "value": 2021
+      },
+      {
+        "path": "exportGoodsOrderDistribution[4].orderCountOfYear[2].count",
+        "value": 1
+      },
+      {
+        "path": "exportGoodsOrderDistribution[4].orderCountOfYear[2].year",
+        "value": 2019
+      },
+      {
+        "path": "exportGoodsOrderDistribution[4].orderCountOfYear[3].count",
+        "value": 40
+      },
+      {
+        "path": "exportGoodsOrderDistribution[4].orderCountOfYear[3].year",
+        "value": 2026
+      },
+      {
+        "path": "exportGoodsOrderDistribution[4].orderCountOfYear[4].count",
+        "value": 61
+      },
+      {
+        "path": "exportGoodsOrderDistribution[4].orderCountOfYear[4].year",
+        "value": 2025
+      },
+      {
+        "path": "exportGoodsOrderTrend[0].count",
+        "value": 0
+      },
+      {
+        "path": "exportGoodsOrderTrend[0].year",
+        "value": 2018
+      },
+      {
+        "path": "exportGoodsOrderTrend[1].count",
+        "value": 0
+      },
+      {
+        "path": "exportGoodsOrderTrend[1].year",
+        "value": 2019
+      },
+      {
+        "path": "exportGoodsOrderTrend[2].count",
+        "value": 72
+      },
+      {
+        "path": "exportGoodsOrderTrend[2].year",
+        "value": 2020
+      },
+      {
+        "path": "exportGoodsOrderTrend[3].count",
+        "value": 106
+      },
+      {
+        "path": "exportGoodsOrderTrend[3].year",
+        "value": 2021
+      },
+      {
+        "path": "exportGoodsOrderTrend[4].count",
+        "value": 625
+      },
+      {
+        "path": "exportGoodsOrderTrend[4].year",
+        "value": 2022
+      }
+    ],
+    "response_sha256": "006de09981647c97fc272e1a24480e1f21ba68a40bef9c98b89052a4d3048974"
+  },
+  {
+    "tool": "customs_bigdata_export_recruitment_profile",
+    "domain": null,
+    "arguments": {
+      "matchKeyword": "宁德时代新能源科技股份有限公司",
+      "keywordType": "name"
+    },
+    "invocation_id": "1793068945122722000",
+    "elapsed_seconds": 0.268,
+    "status": "data",
+    "error_category": null,
+    "result_type": "dict",
+    "top_level_fields": [
+      "recruitingCityCount",
+      "recruitingCityList",
+      "recruitingCount",
+      "recruitingLatestThreeMonthCount",
+      "recruitingPlatforms",
+      "recruitingPositions",
+      "recruitingSourceCount",
+      "recruitingSourceList"
+    ],
+    "row_count": null,
+    "reported_total": null,
+    "numeric_evidence": [
+      {
+        "path": "recruitingCityCount",
+        "value": 91
+      },
+      {
+        "path": "recruitingCount",
+        "value": 32880
+      },
+      {
+        "path": "recruitingLatestThreeMonthCount",
+        "value": 6000
+      },
+      {
+        "path": "recruitingSourceCount",
+        "value": 25
+      }
+    ],
+    "response_sha256": "ae761fe891606a54d55c029e6f67e6c370d9d802c23058f1070bbe0b9cc7e113"
+  },
+  {
+    "tool": "customs_bigdata_export_order_regions",
+    "domain": null,
+    "arguments": {
+      "matchKeyword": "宁德时代新能源科技股份有限公司",
+      "keywordType": "name",
+      "pageIndex": 1,
+      "pageSize": 10
+    },
+    "invocation_id": "1793068945122722000",
+    "elapsed_seconds": 0.199,
+    "status": "data",
+    "error_category": null,
+    "result_type": "dict",
+    "top_level_fields": [
+      "resultList",
+      "total"
+    ],
+    "row_count": 10,
+    "reported_total": 50,
+    "numeric_evidence": [
+      {
+        "path": "resultList[0].amount",
+        "value": 1298597449.6757832
+      },
+      {
+        "path": "resultList[0].count",
+        "value": 4162
+      },
+      {
+        "path": "resultList[0].weight",
+        "value": 136658864.0
+      },
+      {
+        "path": "resultList[1].amount",
+        "value": 725962080.0437002
+      },
+      {
+        "path": "resultList[1].count",
+        "value": 2902
+      },
+      {
+        "path": "resultList[1].weight",
+        "value": 12657480.0
+      },
+      {
+        "path": "resultList[2].amount",
+        "value": 228292078.55657494
+      },
+      {
+        "path": "resultList[2].count",
+        "value": 639
+      },
+      {
+        "path": "resultList[2].weight",
+        "value": 19014920.0
+      },
+      {
+        "path": "resultList[3].amount",
+        "value": 164985959.59375
+      },
+      {
+        "path": "resultList[3].count",
+        "value": 289
+      },
+      {
+        "path": "resultList[3].weight",
+        "value": 5789858.0
+      },
+      {
+        "path": "resultList[4].amount",
+        "value": 112584927.26673937
+      },
+      {
+        "path": "resultList[4].count",
+        "value": 319
+      },
+      {
+        "path": "resultList[4].weight",
+        "value": 4198122.0
+      },
+      {
+        "path": "total",
+        "value": 50
+      }
+    ],
+    "response_sha256": "30431a2a9d4f7277365d94e8a714c1a234a68a0ba4a1043531fa401efb22e01b"
+  },
+  {
+    "tool": "customs_bigdata_overseas_certifications",
+    "domain": null,
+    "arguments": {
+      "matchKeyword": "宁德时代新能源科技股份有限公司",
+      "keywordType": "name"
+    },
+    "invocation_id": "1793068945122722000",
+    "elapsed_seconds": 0.269,
+    "status": "empty",
+    "error_category": null,
+    "result_type": "dict",
+    "top_level_fields": [
+      "text"
+    ],
+    "row_count": null,
+    "reported_total": null,
+    "numeric_evidence": [],
+    "response_sha256": "b2da0c4c26e517e5a1eae0af2a20ca47c52ef51906cf1c3dfa2fe10a67cc714c"
+  }
+]

@@ -1,0 +1,362 @@
+[
+  {
+    "tool": "customs_bigdata_export_trends",
+    "domain": null,
+    "arguments": {
+      "matchKeyword": "海尔智家股份有限公司",
+      "keywordType": "name"
+    },
+    "invocation_id": "1793068947494045000",
+    "elapsed_seconds": 1.493,
+    "status": "data",
+    "error_category": null,
+    "result_type": "dict",
+    "top_level_fields": [
+      "exportTrend",
+      "total"
+    ],
+    "row_count": null,
+    "reported_total": 7,
+    "numeric_evidence": [
+      {
+        "path": "exportTrend[0].amount",
+        "value": 620016.5101547241
+      },
+      {
+        "path": "exportTrend[0].count",
+        "value": 9
+      },
+      {
+        "path": "exportTrend[0].year",
+        "value": 2023
+      },
+      {
+        "path": "exportTrend[1].amount",
+        "value": 10985919.909332275
+      },
+      {
+        "path": "exportTrend[1].count",
+        "value": 490
+      },
+      {
+        "path": "exportTrend[1].year",
+        "value": 2026
+      },
+      {
+        "path": "exportTrend[2].amount",
+        "value": 49.9286003112793
+      },
+      {
+        "path": "exportTrend[2].count",
+        "value": 1
+      },
+      {
+        "path": "exportTrend[2].year",
+        "value": 2021
+      },
+      {
+        "path": "exportTrend[3].amount",
+        "value": 2826.409912109375
+      },
+      {
+        "path": "exportTrend[3].count",
+        "value": 1
+      },
+      {
+        "path": "exportTrend[3].year",
+        "value": 2019
+      },
+      {
+        "path": "exportTrend[4].amount",
+        "value": 1203.047399520874
+      },
+      {
+        "path": "exportTrend[4].count",
+        "value": 4
+      },
+      {
+        "path": "exportTrend[4].year",
+        "value": 2018
+      },
+      {
+        "path": "total",
+        "value": 7
+      }
+    ],
+    "response_sha256": "36d4902b5caec04589088242a5f858c97e10cbc3de013dc1ed60236e633b8d17"
+  },
+  {
+    "tool": "customs_bigdata_export_product_trends",
+    "domain": null,
+    "arguments": {
+      "matchKeyword": "海尔智家股份有限公司",
+      "keywordType": "name"
+    },
+    "invocation_id": "1793068947494045000",
+    "elapsed_seconds": 0.261,
+    "status": "data",
+    "error_category": null,
+    "result_type": "dict",
+    "top_level_fields": [
+      "exportGoodsOrderDistribution",
+      "exportGoodsOrderTrend"
+    ],
+    "row_count": null,
+    "reported_total": null,
+    "numeric_evidence": [
+      {
+        "path": "exportGoodsOrderDistribution[0].count",
+        "value": 303
+      },
+      {
+        "path": "exportGoodsOrderDistribution[0].orderCountOfYear[0].count",
+        "value": 303
+      },
+      {
+        "path": "exportGoodsOrderDistribution[0].orderCountOfYear[0].year",
+        "value": 2026
+      },
+      {
+        "path": "exportGoodsOrderDistribution[1].count",
+        "value": 112
+      },
+      {
+        "path": "exportGoodsOrderDistribution[1].orderCountOfYear[0].count",
+        "value": 112
+      },
+      {
+        "path": "exportGoodsOrderDistribution[1].orderCountOfYear[0].year",
+        "value": 2026
+      },
+      {
+        "path": "exportGoodsOrderDistribution[2].count",
+        "value": 40
+      },
+      {
+        "path": "exportGoodsOrderDistribution[2].orderCountOfYear[0].count",
+        "value": 40
+      },
+      {
+        "path": "exportGoodsOrderDistribution[2].orderCountOfYear[0].year",
+        "value": 2026
+      },
+      {
+        "path": "exportGoodsOrderDistribution[3].count",
+        "value": 25
+      },
+      {
+        "path": "exportGoodsOrderDistribution[3].orderCountOfYear[0].count",
+        "value": 25
+      },
+      {
+        "path": "exportGoodsOrderDistribution[3].orderCountOfYear[0].year",
+        "value": 2022
+      },
+      {
+        "path": "exportGoodsOrderDistribution[4].count",
+        "value": 17
+      },
+      {
+        "path": "exportGoodsOrderDistribution[4].orderCountOfYear[0].count",
+        "value": 17
+      },
+      {
+        "path": "exportGoodsOrderDistribution[4].orderCountOfYear[0].year",
+        "value": 2026
+      },
+      {
+        "path": "exportGoodsOrderTrend[0].count",
+        "value": 0
+      },
+      {
+        "path": "exportGoodsOrderTrend[0].year",
+        "value": 2018
+      },
+      {
+        "path": "exportGoodsOrderTrend[1].count",
+        "value": 0
+      },
+      {
+        "path": "exportGoodsOrderTrend[1].year",
+        "value": 2019
+      },
+      {
+        "path": "exportGoodsOrderTrend[2].count",
+        "value": 0
+      },
+      {
+        "path": "exportGoodsOrderTrend[2].year",
+        "value": 2020
+      },
+      {
+        "path": "exportGoodsOrderTrend[3].count",
+        "value": 0
+      },
+      {
+        "path": "exportGoodsOrderTrend[3].year",
+        "value": 2021
+      },
+      {
+        "path": "exportGoodsOrderTrend[4].count",
+        "value": 0
+      },
+      {
+        "path": "exportGoodsOrderTrend[4].year",
+        "value": 2022
+      }
+    ],
+    "response_sha256": "2af213e4692dcdf6ffcc4bf40058e8e63825dc6ca0d7f0358294c466d40a922d"
+  },
+  {
+    "tool": "customs_bigdata_export_recruitment_profile",
+    "domain": null,
+    "arguments": {
+      "matchKeyword": "海尔智家股份有限公司",
+      "keywordType": "name"
+    },
+    "invocation_id": "1793068947494045000",
+    "elapsed_seconds": 0.301,
+    "status": "data",
+    "error_category": null,
+    "result_type": "dict",
+    "top_level_fields": [
+      "recruitingCityCount",
+      "recruitingCityList",
+      "recruitingCount",
+      "recruitingLatestThreeMonthCount",
+      "recruitingPlatforms",
+      "recruitingPositions",
+      "recruitingSourceCount",
+      "recruitingSourceList"
+    ],
+    "row_count": null,
+    "reported_total": null,
+    "numeric_evidence": [
+      {
+        "path": "recruitingCityCount",
+        "value": 142
+      },
+      {
+        "path": "recruitingCount",
+        "value": 22424
+      },
+      {
+        "path": "recruitingLatestThreeMonthCount",
+        "value": 774
+      },
+      {
+        "path": "recruitingSourceCount",
+        "value": 19
+      }
+    ],
+    "response_sha256": "ddafc2ae982648885d62062ecdf750b7933df35405ca0557717c1d406f6bc214"
+  },
+  {
+    "tool": "customs_bigdata_export_order_regions",
+    "domain": null,
+    "arguments": {
+      "matchKeyword": "海尔智家股份有限公司",
+      "keywordType": "name",
+      "pageIndex": 1,
+      "pageSize": 10
+    },
+    "invocation_id": "1793068947494045000",
+    "elapsed_seconds": 0.744,
+    "status": "data",
+    "error_category": null,
+    "result_type": "dict",
+    "top_level_fields": [
+      "resultList",
+      "total"
+    ],
+    "row_count": 9,
+    "reported_total": 9,
+    "numeric_evidence": [
+      {
+        "path": "resultList[0].amount",
+        "value": 10985919.909332275
+      },
+      {
+        "path": "resultList[0].count",
+        "value": 490
+      },
+      {
+        "path": "resultList[0].weight",
+        "value": 2342145.734059863
+      },
+      {
+        "path": "resultList[1].amount",
+        "value": 584500.91015625
+      },
+      {
+        "path": "resultList[1].count",
+        "value": 6
+      },
+      {
+        "path": "resultList[1].weight",
+        "value": 14.0
+      },
+      {
+        "path": "resultList[2].amount",
+        "value": 35450.0
+      },
+      {
+        "path": "resultList[2].count",
+        "value": 1
+      },
+      {
+        "path": "resultList[2].weight",
+        "value": 0.0
+      },
+      {
+        "path": "resultList[3].amount",
+        "value": 2876.3385124206543
+      },
+      {
+        "path": "resultList[3].count",
+        "value": 2
+      },
+      {
+        "path": "resultList[3].weight",
+        "value": 74.5999984741211
+      },
+      {
+        "path": "resultList[4].amount",
+        "value": 1963.8360233306885
+      },
+      {
+        "path": "resultList[4].count",
+        "value": 4
+      },
+      {
+        "path": "resultList[4].weight",
+        "value": 66.5
+      },
+      {
+        "path": "total",
+        "value": 9
+      }
+    ],
+    "response_sha256": "efab0cc9a9b106e91c419f4c161d06661672ba6191d5f84285a3e25ba54f7f50"
+  },
+  {
+    "tool": "customs_bigdata_overseas_certifications",
+    "domain": null,
+    "arguments": {
+      "matchKeyword": "海尔智家股份有限公司",
+      "keywordType": "name"
+    },
+    "invocation_id": "1793068947494045000",
+    "elapsed_seconds": 1.035,
+    "status": "empty",
+    "error_category": null,
+    "result_type": "dict",
+    "top_level_fields": [
+      "text"
+    ],
+    "row_count": null,
+    "reported_total": null,
+    "numeric_evidence": [],
+    "response_sha256": "b2da0c4c26e517e5a1eae0af2a20ca47c52ef51906cf1c3dfa2fe10a67cc714c"
+  }
+]

@@ -1,0 +1,46 @@
+{
+  "metric_overflows": [],
+  "document_title": "海尔智家股份有限公司 海关大数据报告",
+  "title_matches": true,
+  "charts": 3,
+  "rendered_charts": 3,
+  "zero_size_charts": 0,
+  "chart_details": [
+    {
+      "width": 984,
+      "height": 300,
+      "instance": true,
+      "renderer": true,
+      "graphics": 71
+    },
+    {
+      "width": 984,
+      "height": 300,
+      "instance": true,
+      "renderer": true,
+      "graphics": 59
+    },
+    {
+      "width": 984,
+      "height": 300,
+      "instance": true,
+      "renderer": true,
+      "graphics": 51
+    }
+  ],
+  "page_width": 1905,
+  "viewport_width": 1920,
+  "empty_headers": 0,
+  "script_errors": [],
+  "external_resources": 0,
+  "external_asset_references": 0,
+  "ok": true,
+  "report_html_sha256": "f2792f3b560fbd5f644a6671ab75ee0f84b9fcc8c6fe5d61129b41bbc5df03ac",
+  "report_json_sha256": "9ac311203493c4d4ac899a5b713faacf9e261a0364e6027ea782f166c99d4323",
+  "skill": "customs-skill",
+  "id": "03-home-appliance-export",
+  "browser": "Ego Lite",
+  "space_id": 4,
+  "offline": true,
+  "checked_at": "2026-10-27T03:02:30.599Z"
+}

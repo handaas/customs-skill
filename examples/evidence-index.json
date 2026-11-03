@@ -17,7 +17,7 @@
         "business-review.json": "eb18890fa2b6f543389dba7a5d4c55c4ec587cc6e016cd893bfae466ea80149e",
         "browser-check.json": "e41bf3892b17ad3f9c98973df70f2f2588d68abaad434a4d047abb293982b502"
       },
-      "audit_record": "../../test-records/live-replaced-20261027/01-ev-export.md"
+      "audit_record": "../test-records/live-replaced-20261027/01-ev-export.md"
     },
     {
       "skill": "customs-skill",
@@ -35,7 +35,7 @@
         "business-review.json": "48daf634945c84ef7de171fcc836d018d25edb5e21613257788dd61981e7a726",
         "browser-check.json": "29bc5a698b451fdc18ca2ea7b784d0122248359f8f0c9e180721be1a87c87234"
       },
-      "audit_record": "../../test-records/live-replaced-20261027/02-battery-export.md"
+      "audit_record": "../test-records/live-replaced-20261027/02-battery-export.md"
     },
     {
       "skill": "customs-skill",
@@ -53,7 +53,7 @@
         "business-review.json": "225460d67379f88e1a7865b62103d303f9decd6b54c8d90633025002c7a44c6f",
         "browser-check.json": "f58148102f4536f86a6cfbb70d79f76ec69ff408fd3e051fc2b23006c86053d6"
       },
-      "audit_record": "../../test-records/live-replaced-20261027/03-home-appliance-export.md"
+      "audit_record": "../test-records/live-replaced-20261027/03-home-appliance-export.md"
     },
     {
       "skill": "customs-skill",
@@ -71,7 +71,7 @@
         "business-review.json": "d4c3ae32ff9072b66c7ab980abe06dce0fdcc3bda4632fb881190145c179de5b",
         "browser-check.json": "0a0a22f6b75b3941064d84a0314a13d9d42e6442a582318b45cde1b37e8ecde9"
       },
-      "audit_record": "../../test-records/live-replaced-20261027/05-electronics-contract-export.md"
+      "audit_record": "../test-records/live-replaced-20261027/05-electronics-contract-export.md"
     },
     {
       "skill": "customs-skill",
@@ -89,7 +89,7 @@
         "business-review.json": "d8661af9b4aafd699a062724859b20d57598769752c97ef2e4f1eab313ea24f2",
         "browser-check.json": "6f18a55bf887db00523f2ddc5163aea1f9789f8441ed083ac5c22d92ed58391d"
       },
-      "audit_record": "../../test-records/live-replaced-20261027/06-smartphone-emerging-markets.md"
+      "audit_record": "../test-records/live-replaced-20261027/06-smartphone-emerging-markets.md"
     },
     {
       "skill": "customs-skill",
@@ -107,7 +107,7 @@
         "business-review.json": "9f84c458843e78b028178339837074ea5b1727ce02c570f5d64c7a319a4e7bc9",
         "browser-check.json": "841534f230ea120d7a76a8b7a0bbe7315d068aeb218738f9945465f3cdac7999"
       },
-      "audit_record": "../../test-records/live-replaced-20261027/07-fuzzy-export-match.md"
+      "audit_record": "../test-records/live-replaced-20261027/07-fuzzy-export-match.md"
     }
   ]
 }

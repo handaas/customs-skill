@@ -18,6 +18,7 @@ This file never prints secrets; MCP credentials live in the server's own .env.
 from __future__ import annotations
 
 import argparse
+import copy
 import datetime as dt
 import json
 import pathlib
@@ -309,18 +310,20 @@ def _derive_core_metrics(metrics: List[Dict[str, Any]], core: Mapping[str, Any])
     regions = core.get("order_regions", []) if isinstance(core, dict) else []
     certs = core.get("overseas_certs", []) if isinstance(core, dict) else []
     if isinstance(trends, list) and trends:
-        metrics.append({"label": "出口年份", "value": str(len(trends)), "hint": "有出口记录的年度数"})
         try:
             total_usd = sum(float(r.get("出口金额(美元)", 0) or 0) for r in trends if r.get("出口金额(美元)"))
             if total_usd > 0:
                 if total_usd >= 1e6:
-                    metrics.append({"label": "累计出口额", "value": f"${total_usd/1e6:.2f}M", "hint": "历年出口金额合计（美元）"})
+                    metrics.append({"label": "已返回年度出口额合计", "value": f"${total_usd/1e6:.2f}M", "hint": "按已返回年度金额相加（美元），可能含当前未完整年度；不等于海关全量"})
                 else:
-                    metrics.append({"label": "累计出口额", "value": f"${total_usd/1e3:.0f}K", "hint": "历年出口金额合计（美元）"})
+                    metrics.append({"label": "已返回年度出口额合计", "value": f"${total_usd/1e3:.0f}K", "hint": "按已返回年度金额相加（美元），可能含当前未完整年度；不等于海关全量"})
         except (ValueError, TypeError):
             pass
     if isinstance(products, list) and products:
-        metrics.append({"label": "出口产品数", "value": str(len(products)), "hint": "不同HS编码的出口产品数"})
+        specific = [r for r in products if isinstance(r, dict) and not _is_unclassified_product(r.get("HS 商品编码"))]
+        unclassified = len(products) - len(specific)
+        hint = "具体HS商品编码数（不含“其他/未分类”）" + (f"；另有 {unclassified} 条未分类记录" if unclassified else "")
+        metrics.append({"label": "具体HS编码数", "value": str(len(specific)), "hint": hint})
     if isinstance(regions, list) and regions:
         metrics.append({"label": "纳入分析地区数", "value": str(len(regions)), "hint": "resultList 归纳的地区明细行数"})
         try:
@@ -374,7 +377,7 @@ def build_metrics(trends: Any, recruitment: Any, regions: Any, certs: Any) -> Li
     if isinstance(certs, dict):
         cert_count = certs.get("certCount")
 
-    metrics.append({"label": "出口年份覆盖", "value": (str(trend_year_count) + " 年" if trend_year_count else "-"), "hint": "出口趋势所涉年份数"})
+    metrics.append({"label": "出口年度数（已返回）", "value": (str(trend_year_count) + " 年" if trend_year_count else "-"), "hint": "出口趋势中出现的年度数；不保证连续，也不等于完整经营年限"})
     metrics.append({"label": "累计外贸招聘", "value": (_text(recruit_total) if recruit_total is not None else "-"), "hint": "历史累计外贸相关岗位招聘总数（recruitingCount）"})
     metrics.append({"label": "近三月外贸招聘", "value": (_text(recruit_3m) if recruit_3m is not None else "-"), "hint": "近三个月外贸相关岗位招聘数"})
     metrics.append({"label": "出口地区总数", "value": (_text(regions_total) if regions_total is not None else "-"), "hint": "上游响应 total，可能大于纳入明细条数（仅当采集中断时）"})
@@ -396,6 +399,20 @@ def _trend_rows(trends: Any) -> List[Dict[str, Any]]:
     return sorted(out, key=lambda row: _int(row.get("年份")) or -1)
 
 
+def _product_label(code: Any) -> str:
+    text = _text(code)
+    if not text or text == "-":
+        return "未分类（上游未返回编码）"
+    if text in {"其他", "未分类", "未知"}:
+        return "其他（未分类，非具体HS编码）"
+    return text
+
+
+def _is_unclassified_product(code: Any) -> bool:
+    text = _text(code)
+    return text.startswith(("其他", "未分类")) or text in {"-", ""}
+
+
 def _product_trend_rows(product_trends: Any) -> List[Dict[str, Any]]:
     out = []
     p = product_trends if isinstance(product_trends, dict) else {}
@@ -404,10 +421,14 @@ def _product_trend_rows(product_trends: Any) -> List[Dict[str, Any]]:
         if not isinstance(item, dict):
             continue
         out.append({
-            "HS 商品编码": _text_or_dash(item.get("hsCode")),
+            "HS 商品编码": _product_label(item.get("hsCode")),
             "订单数量": (_text(item.get("count")) if item.get("count") is not None
                        else _text(item.get("value")) if item.get("value") is not None else "-"),
         })
+    try:
+        out.sort(key=lambda row: int(str(row.get("订单数量", "0")).replace(",", "")), reverse=True)
+    except (TypeError, ValueError):
+        pass
     return out
 
 
@@ -444,6 +465,10 @@ def _region_rows(regions: Any) -> List[Dict[str, Any]]:
             "金额(美元)": _text(item.get("amount")) if item.get("amount") is not None else "-",
             "净重(千克)": _text(item.get("weight")) if item.get("weight") is not None else "-",
         })
+    try:
+        out.sort(key=lambda row: int(str(row.get("订单数", "0")).replace(",", "")), reverse=True)
+    except (TypeError, ValueError):
+        pass
     return out
 
 
@@ -596,10 +621,22 @@ def _city_region_cluster(cities: List[Any]) -> Dict[str, int]:
 def build_insights(subject: Mapping[str, Any], core: Mapping[str, Any], metrics: Sequence[Mapping[str, Any]]) -> List[Dict[str, Any]]:
     insights: List[Dict[str, Any]] = []
     metric_map = {m["label"]: str(m["value"]) for m in metrics}
-    trend_years = metric_map.get("出口年份覆盖")
     recruit_3m = metric_map.get("近三月外贸招聘")
     regions_total = metric_map.get("出口地区总数")
     cert_count = metric_map.get("海外认证数")
+
+    def _trend_clause(ta: Mapping[str, Any], unit: str, prefix: str) -> str:
+        if not ta:
+            return ""
+        if ta.get("all_zero"):
+            return "全部为上游原值 0，金额字段覆盖口径未验证，不据此判断规模"
+        peak = f"{ta.get('peak_value', 0):.0f} {unit}"
+        peak_label = "当前年度 YTD 峰值（未完整）" if ta.get("incomplete_latest") and str(ta.get("peak_period")) == str(dt.datetime.now().year) else "峰值"
+        direction = str(ta.get("direction") or "")
+        periods = ta.get("comparison_periods") or []
+        if periods and len(periods) == 2 and direction:
+            direction = f"最近两个完整年度 {periods[0]}→{periods[1]} {direction}"
+        return f"{prefix}{peak_label}在“{ta.get('peak_period')}”（{peak}），{direction}"
 
     trend_rows = core.get("export_trends") or []
     if trend_rows:
@@ -609,25 +646,47 @@ def build_insights(subject: Mapping[str, Any], core: Mapping[str, Any], metrics:
         if amt_ta.get("all_zero"):
             ev_parts.append("出口金额均为上游原值 0；金额字段覆盖口径未验证，不据此判断出口规模或价格变化")
         elif amt_ta:
-            ev_parts.append(f"出口金额峰值在“{amt_ta['peak_period']}”（{amt_ta['peak_value']:.0f} 美元），近年{amt_ta['direction']}{('，' + amt_ta.get('yoy', '')) if amt_ta.get('yoy') else ''}")
+            ev_parts.append(_trend_clause(amt_ta, "美元", "金额"))
         if cnt_ta:
-            ev_parts.append(f"订单量峰值在“{cnt_ta['peak_period']}”（{cnt_ta['peak_value']:.0f} 笔），近年{cnt_ta['direction']}")
+            ev_parts.append(_trend_clause(cnt_ta, "笔", "订单量"))
+        years = sorted({_int(r.get("年份")) for r in trend_rows if _int(r.get("年份")) is not None})
+        if len(years) >= 2:
+            gaps = [str(y) for y in range(years[0], years[-1] + 1) if y not in years]
+            if gaps:
+                ev_parts.append(f"年度序列不连续，缺少 {'、'.join(gaps)} 年记录")
         if amt_ta.get("incomplete_latest") or cnt_ta.get("incomplete_latest"):
             ev_parts.append(f"{dt.datetime.now().year} 年为未完整年度（YTD），不与完整年度直接同比")
         insights.append({
             "feature": "出口活跃度",
-            "evidence": f"出口趋势覆盖 {trend_years or '若干'}。" + ("；".join(ev_parts) + "。" if ev_parts else ""),
-            "interpretation": "年度金额与订单数仅按各自字段描述；当前年度为 YTD 时不与完整年度直接同比，跨年缺口也不标作同比。",
+            "evidence": f"出口趋势覆盖 {len(years)} 个年度。" + ("；".join(ev_parts) + "。" if ev_parts else ""),
+            "interpretation": "年度金额与订单数仅按各自字段描述；缺年、低样本和当前年度 YTD 均会削弱趋势可比性，不能据此外推未来出口表现。",
         })
     product_rows = core.get("export_product_trends") or []
     if product_rows:
         conc = _concentration(product_rows, "HS 商品编码", "订单数量", 3)
         if conc:
-            insights.append({
-                "feature": "核心出口品类",
-                "evidence": f"“HS {conc['top']}”为订单最多的品类，占比约 {conc['top_share']:.0f}%，前 3 类合计 {conc['cr']:.0f}%（CR3）。",
-                "interpretation": "HS 编码占比仅描述当前返回样本中订单数量的分布与集中程度，不代表产品竞争力、售价或市场份额。",
-            })
+            top_label = str(conc["top"])
+            if _is_unclassified_product(top_label):
+                specific_rows = [r for r in product_rows if not _is_unclassified_product(r.get("HS 商品编码"))]
+                specific = _concentration(specific_rows, "HS 商品编码", "订单数量", 3) if specific_rows else {}
+                if specific:
+                    evidence = (
+                        f"“{top_label}”占订单约 {conc['top_share']:.0f}%，说明 HS 编码覆盖不足，不能识别核心品类；"
+                        f"在可识别的具体编码中，“{specific['top']}”占可识别样本约 {specific['top_share']:.0f}%（前 3 类 {specific['cr']:.0f}%）。"
+                    )
+                else:
+                    evidence = f"“{top_label}”占订单约 {conc['top_share']:.0f}%，全部记录均未提供可识别 HS 编码。"
+                insights.append({
+                    "feature": "出口品类分类缺口",
+                    "evidence": evidence,
+                    "interpretation": "“其他/未分类”是分类缺口而非商品类别；不能把它当作核心出口品类，也不能据此判断产品竞争力或市场份额。",
+                })
+            else:
+                insights.append({
+                    "feature": "核心出口品类",
+                    "evidence": f"“{top_label}”为订单最多的品类，占比约 {conc['top_share']:.0f}%，前 3 类合计 {conc['cr']:.0f}%（CR3）。",
+                    "interpretation": "HS 编码占比仅描述当前返回样本中订单数量的分布与集中程度，不代表产品竞争力、售价或市场份额。",
+                })
     region_rows = core.get("order_regions") or []
     if region_rows:
         conc = _concentration(region_rows, "国家/地区", "订单数", 3)
@@ -705,6 +764,13 @@ def _populated_section_titles(core: Mapping[str, Any]) -> List[str]:
     return titles
 
 
+def _populated_section_count(core: Mapping[str, Any]) -> int:
+    sections = core.get("sections")
+    if isinstance(sections, list) and sections:
+        return sum(1 for s in sections if isinstance(s, dict) and _has_evidence(core.get(s.get("key"))))
+    return sum(1 for k in core if k != "sections" and _has_evidence(core.get(k)))
+
+
 def build_abstract(subject: Mapping[str, Any], core: Mapping[str, Any], metrics: Sequence[Mapping[str, Any]]) -> str:
     name = subject.get("enterprise") or subject.get("match_raw") or "目标企业"
     section_titles = _populated_section_titles(core)
@@ -740,7 +806,28 @@ def build_dry_run_payload(raw: str, keyword_type: str) -> Dict[str, Any]:
 # Assembly
 # --------------------------------------------------------------------------- #
 
+def _dedupe_metrics(metrics: Sequence[Mapping[str, Any]]) -> List[Dict[str, Any]]:
+    out: List[Dict[str, Any]] = []
+    seen: Dict[str, Dict[str, Any]] = {}
+    for item in metrics:
+        if not isinstance(item, Mapping):
+            continue
+        row = dict(item)
+        label = str(row.get("label") or "")
+        if not label:
+            continue
+        if label in seen:
+            existing = seen[label]
+            if row.get("hint") and row.get("hint") not in str(existing.get("hint") or ""):
+                existing["hint"] = f"{existing.get('hint')}；{row.get('hint')}".strip("；")
+            continue
+        seen[label] = row
+        out.append(row)
+    return out
+
+
 def _assemble(subject: Mapping[str, Any], core: Mapping[str, Any], metrics: Sequence[Mapping[str, Any]], *, dry_run: bool) -> Dict[str, Any]:
+    metrics = _dedupe_metrics(metrics)
     abstract = build_abstract(subject, core, metrics)
     records = build_records(core)
     insights = build_insights(subject, core, metrics)
@@ -762,10 +849,8 @@ def _assemble(subject: Mapping[str, Any], core: Mapping[str, Any], metrics: Sequ
     if populated == 0:
         import sys
         print("⚠️ 质量门禁警告: 所有核心分析维度均无数据", file=sys.stderr)
-        target = subject.get("enterprise") or subject.get("match_raw") or "目标企业"
-        abstract = f"本次对“{target}”的查询未获得有效数据（海关、外贸或招聘画像均为空）；报告不据此生成出口规模、市场或认证结论。"
     title = f"{subject.get('enterprise') or '目标企业'} 海关大数据报告"
-    return {
+    report = {
         "report_type": REPORT_TYPE,
         "title": title,
         "banner": REPORT_BANNER,
@@ -792,6 +877,7 @@ def _assemble(subject: Mapping[str, Any], core: Mapping[str, Any], metrics: Sequ
             "quality_report": quality_report,
         },
     }
+    return apply_content_review(report)
 
 
 @paid_call_scope
@@ -827,9 +913,176 @@ def build_payload(raw: str, keyword_type: str, page_size: int, max_pages: int = 
     return attach_pagination(report, {"订单地区": regions})
 
 
-# --------------------------------------------------------------------------- #
-# CLI
-# --------------------------------------------------------------------------- #
+def _refresh_quality_report(report: Dict[str, Any]) -> Dict[str, Any]:
+    """Refresh section-fill metrics after offline review changed sections.
+
+    ``0`` is a populated value; None/""/[]/{} and documented empty sentinels are
+    empty. coverage_pct is section fill only, never an accuracy claim.
+    """
+    core = report.get("core_analysis") or {}
+    sections = core.get("sections")
+    if isinstance(sections, list) and sections:
+        total = len(sections)
+        populated = sum(1 for s in sections if isinstance(s, dict) and _has_evidence(core.get(s.get("key"))))
+    else:
+        keys = [k for k in core if k != "sections"]
+        total = max(1, len(keys))
+        populated = sum(1 for k in keys if _has_evidence(core.get(k)))
+    source = report.setdefault("data_source", {})
+    source["quality_report"] = {
+        "total_sections": total,
+        "populated_sections": populated,
+        "empty_sections": total - populated,
+        "coverage_pct": round(populated / max(1, total) * 100),
+        "metric": "section_fill_rate",
+        "note": "章节填充率，仅表示有返回内容的 section 占比，不是内容准确率",
+    }
+    return report
+
+
+def _merge_review_records(previous: Any, current: Sequence[Mapping[str, Any]]) -> List[Dict[str, Any]]:
+    """Keep earlier review records when the same report is processed again."""
+    merged: List[Dict[str, Any]] = []
+    seen = set()
+    for item in list(previous or []) + list(current or []):
+        if not isinstance(item, Mapping):
+            continue
+        row = dict(item)
+        key = json.dumps(row, ensure_ascii=False, sort_keys=True, default=str)
+        if key in seen:
+            continue
+        seen.add(key)
+        merged.append(row)
+    return merged
+
+
+def apply_content_review(report: Mapping[str, Any], source_evidence: Optional[Any] = None) -> Dict[str, Any]:
+    """Rebuild customs narrative from fields already present in a report.
+
+    Pure/offline: no MCP call and no new facts. Repairs deterministic issues:
+
+    * duplicated year cards ("出口年份覆盖" + "出口年份");
+    * "其他/未分类" HS rows presented as a real core product category;
+    * product counts that included the unclassified bucket;
+    * trend statements that ignored missing years or called an incomplete year
+      a normal peak ("近年下降 100%" beside a large YTD value).
+    """
+    out = copy.deepcopy(dict(report))
+    corrections: List[Dict[str, Any]] = []
+    subject = out.get("subject") or {}
+    core = out.get("core_analysis") or {}
+    previous_review = (out.get("data_source") or {}).get("content_review") or {}
+
+    # Product rows: label and sort unclassified bucket explicitly.
+    product_rows = core.get("export_product_trends") or []
+    for row in product_rows:
+        if not isinstance(row, dict):
+            continue
+        before = row.get("HS 商品编码")
+        after = _product_label(before)
+        if after != before:
+            row["HS 商品编码"] = after
+            corrections.append({
+                "field": "core_analysis.export_product_trends[].HS 商品编码",
+                "before": before,
+                "after": after,
+                "reason": "“其他”不是具体 HS 编码，不能作为核心品类参与分类结论",
+            })
+    try:
+        product_rows.sort(key=lambda row: int(str(row.get("订单数量", "0")).replace(",", "")), reverse=True)
+    except (TypeError, ValueError):
+        pass
+
+    # Region rows: bar order follows order count.
+    region_rows = core.get("order_regions") or []
+    try:
+        region_rows.sort(key=lambda row: int(str(row.get("订单数", "0")).replace(",", "")), reverse=True)
+    except (TypeError, ValueError):
+        pass
+
+    # Metrics: dedupe year cards, rename totals, recompute specific-code count.
+    raw_metrics = [m for m in (out.get("metrics") or []) if isinstance(m, dict)]
+    duplicate_years = [m for m in raw_metrics if m.get("label") == "出口年份"]
+    before_metrics = [m for m in raw_metrics if m.get("label") != "出口年份"]
+    if duplicate_years:
+        corrections.append({
+            "field": "metrics[出口年份]",
+            "before": f"{len(duplicate_years)} 张“出口年份”卡",
+            "after": "移除；保留“出口年度数（已返回）”",
+            "reason": "与“出口年份覆盖”同值重复，非两个不同指标",
+        })
+    for metric in before_metrics:
+        label = metric.get("label")
+        if label == "出口年份覆盖":
+            metric["label"] = "出口年度数（已返回）"
+            metric["hint"] = "出口趋势中出现的年度数；不保证连续，也不等于完整经营年限"
+            corrections.append({
+                "field": "metrics[出口年份覆盖]",
+                "before": "出口年份覆盖",
+                "after": "出口年度数（已返回）",
+                "reason": "与“出口年份”指标同名同值重复；合并为一张卡并说明不保证连续",
+            })
+        elif label == "累计出口额":
+            metric["label"] = "已返回年度出口额合计"
+            metric["hint"] = "按已返回年度金额相加（美元），可能含当前未完整年度；不等于海关全量"
+            corrections.append({
+                "field": "metrics[累计出口额]",
+                "before": "累计出口额",
+                "after": "已返回年度出口额合计",
+                "reason": "原标签暗示完整历史累计，实际只合计已返回年度且可能含 YTD",
+            })
+        elif label == "出口产品数":
+            specific = [r for r in product_rows if not _is_unclassified_product(r.get("HS 商品编码"))]
+            unclassified = len(product_rows) - len(specific)
+            metric["label"] = "具体HS编码数"
+            metric["value"] = str(len(specific))
+            metric["hint"] = "具体HS商品编码数（不含“其他/未分类”）" + (f"；另有 {unclassified} 条未分类记录" if unclassified else "")
+            corrections.append({
+                "field": "metrics[出口产品数]",
+                "before": "出口产品数",
+                "after": "具体HS编码数",
+                "reason": "原计数把“其他/未分类”当成一个产品类别，夸大可识别品类数",
+            })
+    metrics = _dedupe_metrics(before_metrics)
+    if len(metrics) != len(before_metrics):
+        corrections.append({
+            "field": "metrics",
+            "before": f"{len(before_metrics)} 张指标卡",
+            "after": f"{len(metrics)} 张指标卡",
+            "reason": "“出口年份覆盖/出口年份”为同一计数的重复卡片",
+        })
+    out["metrics"] = metrics
+
+    if _populated_section_count(core) == 0:
+        target = subject.get("enterprise") or subject.get("match_raw") or "目标企业"
+        abstract = (
+            f"本次对“{target}”的查询未获得有效数据（海关、外贸或招聘画像均为空）；"
+            "报告不据此生成出口规模、市场或认证结论。"
+        )
+    else:
+        abstract = build_abstract(subject, core, metrics)
+    insights = build_insights(subject, core, metrics)
+    out["insights"] = insights
+    out["executive_summary"] = [item["interpretation"] for item in insights][:5] or [abstract[:120]]
+    out["abstract"] = abstract
+    out["summary"] = abstract
+    source = out.get("data_source") or {}
+    source["content_review"] = {
+        "mode": "offline_report_fields_only",
+        "source_evidence_supplied": bool(source_evidence),
+        "reviewed_at": dt.datetime.now().astimezone().isoformat(timespec="seconds"),
+        "corrections": _merge_review_records(previous_review.get("corrections"), corrections),
+        "not_changed": [
+            "未重新查询 MCP；未新增国家、产品、金额或订单事实",
+            "未删除“其他/未分类”记录，只禁止把它当具体品类",
+            "缺年与未完整年度保留，不插值、不补齐",
+        ],
+    }
+    out["data_source"] = source
+    return _refresh_quality_report(out)
+
+
+
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Compose a customs big-data report via the customs MCP.")

@@ -76,3 +76,17 @@ python scripts/render_report.py --input output/customs.json --output output/cust
 ```
 
 返回：JSON 路径、HTML 路径、Markdown 路径，以及企业全称映射与数据口径摘要。
+
+## AI 内容审校清单（海关/外贸）
+
+| 检查项 | 原值示例 | 允许的规范动作 | 证据位置 |
+| --- | --- | --- | --- |
+| 未分类 HS | `其他 402`（占 79%） | 标“其他（未分类，非具体HS编码）”，结论写分类缺口 | `export_product_trends[]` |
+| 年度重复 | `出口年份覆盖 9 年` + `出口年份 9` | 合并为一张“出口年度数（已返回）”，不合并不同统计量 | `metrics` |
+| 累计金额 | `累计出口额 $3.41M` | 改为“已返回年度出口额合计”，说明可能含 YTD | `export_trends[]` |
+| 趋势缺年 | 2018、2019、2021…（缺 2020） | 写“年度序列不连续，缺 2020”；不插值 | `export_trends[].年份` |
+| YTD | 2026 峰值、同比 -100% | 标“当前年度 YTD 峰值（未完整）”，同比只对相邻完整年度 | `export_trends[]` |
+| 地区 CR3 | 当前页 10/15 地区 | 标“当前返回样本 CR3”，不与上游 total 混用 | `order_regions[]`、`data_source.pagination` |
+| 招聘城市 | “其他”占 50% | 说明城市群归类不足，不推断人才布局 | `recruitment_cities` |
+
+离线修订入口：`compose_report.py::apply_content_review(report)`。正常生成（`build_payload` / CLI 非 `--dry-run`）已在组装阶段自动执行同一审校；离线入口只读报告已有字段，不查 MCP；修正项写入 `data_source.content_review.corrections`，重复处理保留既有修正记录，不删除“其他”记录。

@@ -71,6 +71,34 @@ description: Use for generating a professional customs (海关) big-data report 
 4. **渲染三件套**：`compose_report.py --enterprise ... --output ... --report-output ...` 直接产出 JSON + HTML + Markdown；或 `render_report.py --input ... --output ...` 重渲染。
 5. **返回路径**：返回 JSON、HTML、Markdown 文件路径，以及企业全称映射与数据口径。
 
+- **渲染前置检查**：执行会产出含图表 HTML / PDF 的报告命令前，先验证 `node --version` 与本 skill 自带 `assets/vendor/echarts.min.js` 存在；内嵌静态 SVG 的生成需要 Node.js（推荐当前 LTS，无需 npm 包），缺失时报告生成明确报错。查看已生成的 HTML 与 Markdown 输出不需要 Node。
+
+## AI 内容审校（正常生成已内置，离线复核可重放）
+
+正常生成（`build_payload` / CLI 非 `--dry-run`）在组装阶段已自动执行 `apply_content_review`；`--dry-run` 与正常生成共用同一条路径且只执行一次。离线入口仅用于复核已有报告，重复调用保留此前 `content_review.corrections`。以下语义核对仍须由当前 AI 逐项完成。
+
+出口金额、订单数、地区与 HS 编码是不同维度；以下核对必须由当前 AI 完成，并在审校记录中保留原值、规范值与证据位置。
+
+1. **“其他”不是品类**：HS 编码为“其他/未分类/空”时，标为“其他（未分类，非具体HS编码）”；若它占订单最多，结论写成“分类缺口”，不得称“核心出口品类”。具体 HS 编码数不含“其他”。
+2. **年度可比性**：先检查年度是否连续；缺年不插值、不补 0。当前年度为 YTD 时，不把它与完整年度直接同比，也不把 YTD 峰值写成“近年峰值”。同比只对相邻完整年度计算，并写出比较年份。
+3. **金额与样本**：“已返回年度出口额合计”只合计返回年度金额，可能含 YTD，不等于海关全量；金额单位保持美元，不把 0 当缺失、不把缺失当 0。
+4. **地区口径**：`出口地区总数` 是上游 total，地区和 CR3 只按当前返回样本计算；两者不得混为“覆盖全部市场”。地区图与表按订单数排序，排序不改变事实。
+5. **招聘信号**：近三月/累计招聘数、城市与岗位只描述招聘样本；`其他` 城市群占比高时说明归类不足，不据此推断人才布局或跨境电商团队。
+6. **主体确认**：`美的集团` 这类非完整法定名称即使候选名称一致，也需在口径中保留原输入与匹配原因；未唯一确认时不调用主体数据。
+
+离线修订已有报告（不调用 MCP，不覆盖 `examples/`）：
+
+```python
+import json
+from compose_report import apply_content_review
+
+report = json.load(open("examples/01-ev-export/report.json", encoding="utf-8"))
+revised = apply_content_review(report)
+json.dump(revised, open("output/content-quality-review/01-ev-export/report.json", "w", encoding="utf-8"), ensure_ascii=False, indent=2)
+```
+
+`apply_content_review` 标注未分类 HS、去除重复年度指标、重命名累计出口额/产品数、按订单量排序，并重写年度比较与品类缺口文案；不新增国家、产品、金额或订单事实。
+
 ## 脚本速查
 
 ```bash
